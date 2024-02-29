@@ -5,7 +5,7 @@
 		exit;
 
     // Enregistrement "admin menu"
-    add_action('menu_admin', 'JTGH_WPHGP_genere_menu_admin');
+    add_action('admin_menu', 'JTGH_WPHGP_genere_menu_admin');
 
     // Fonction de génération du menu admin
     function JTGH_WPHGP_genere_menu_admin() {
@@ -17,7 +17,7 @@
             $page_title = $menu_title.' - '.JTGH_WPHGP_PAGE_TITLE;
             $capability = 'manage_options';
             $icon_url = plugins_url('images/logo_wp_purple_20x20.png', JTGH_WPHGP_ROOT_FILE);
-            add_menu_page($page_title, $menu_title, $capability, $menu_slug, $callback, $icon_url);
+            add_menu_page($page_title, $menu_title, $capability, $main_slug, $callback, $icon_url);
 
         // Sous-menu #1
         $parent_slug = $main_slug;

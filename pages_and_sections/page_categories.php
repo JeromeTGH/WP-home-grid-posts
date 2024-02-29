@@ -1,1 +1,1 @@
-<h1>Catégories</h1>
+<h2>Catégories</h2>

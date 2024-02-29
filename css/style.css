@@ -1,0 +1,19 @@
+.JTGH_WPHGP_red_color {
+    color: red;
+}
+
+.JTGH_WPHGP_notice_alert {
+    color: red;
+    font-weight: bold;
+}
+
+.JTGH_WPHGP_notice_success {
+    color: green;
+    font-weight: bold;
+}
+
+.JTGH_WPHGP_table_layout {
+    width: 99%;
+    border: 1px solid #E7E7E7;
+    padding: 10px 0px;
+}

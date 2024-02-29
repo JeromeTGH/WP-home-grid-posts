@@ -5,10 +5,9 @@
 		exit;
 
 	// Définition des constantes du plugin
-	define('JTGH_WPHGP_OPTION_PREFIX', 'JTGH_WPHGP_');
-	define('JTGH_WPHGP_MAIN_SLUG', 'JTGH-WPHGP-main');
-	define('JTGH_WPHGP_PAGE_TITLE', 'JTGH WPHGP - ');
-	define('JTGH_WPHGP_NONCE_BASE', 'JTGH_WPHGP_');
+	define('JTGH_WPHGP_PREFIX', 'JTGH_WPHGP_');
+	define('JTGH_WPHGP_PAGE_TITLE', 'WP Home Grid Posts');
+	// define('JTGH_WPHGP_NONCE_BASE', 'JTGH_WPHGP_');
 	define('JTGH_WPHGP_SHORTCODE', '[JTGH_WPHGP]');
 
 	// Mise en mémoire tampon des données qui suivront (hormis headers)

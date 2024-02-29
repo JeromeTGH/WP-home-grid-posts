@@ -6,7 +6,6 @@
 
 	// Définition des constantes du plugin
 	define('JTGH_WPHGP_OPTION_PREFIX', 'JTGH_WPHGP_');
-	define('JTGH_WPHGP_BDD_TBL_NAME', 'JTGH_WPHGP');
 	define('JTGH_WPHGP_MAIN_SLUG', 'JTGH-WPHGP-main');
 	define('JTGH_WPHGP_PAGE_TITLE', 'JTGH WPHGP - ');
 	define('JTGH_WPHGP_NONCE_BASE', 'JTGH_WPHGP_');
@@ -17,7 +16,6 @@
 
 	// Scripts à lancer
 	require(JTGH_WPHGP_ROOT_DIRECTORY.'/load/fonctions.php');
-	require(JTGH_WPHGP_ROOT_DIRECTORY.'/load/install.php');
 	require(JTGH_WPHGP_ROOT_DIRECTORY.'/load/install.php');
 	require(JTGH_WPHGP_ROOT_DIRECTORY.'/load/uninstall.php');
 	require(JTGH_WPHGP_ROOT_DIRECTORY.'/load/pages_manager.php');

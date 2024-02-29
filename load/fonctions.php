@@ -23,6 +23,13 @@
             update_option(JTGH_WPHGP_OPTION_PREFIX.$nom_de_l_option, $nouvelle_valeur);
         else
             add_option(JTGH_WPHGP_OPTION_PREFIX.$nom_de_l_option, $nouvelle_valeur);
-    }    
+    }
+
+    // =============================
+    // Fonction : JTGH_delete_option
+    // =============================
+    function JTGH_delete_option($nom_de_l_option) {
+        delete_option(JTGH_WPHGP_OPTION_PREFIX.$nom_de_l_option);
+    } 
 
 ?>

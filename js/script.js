@@ -21,24 +21,22 @@ const JTGH_WPHGP_handleCategoriesBasc = (option) => {
     const source_cat_select = document.getElementById("JTGH_WPHGP_categories_source");
     const dest_cat_select = document.getElementById("JTGH_WPHGP_categories_dest");
 
-    // Chargement des données dans des tableaux, en vidant les selects au fur et à mesure
-    const tblSrc = [];
-    const tblDest = [];
+    // Chargement des données dans des objets, en vidant les selects au fur et à mesure
+    const tblSrc = {};
+    const tblDest = {};
 
     for (let i=source_cat_select.options.length-1; i>=0; i--) {
-        tblSrc.push({
-            value: source_cat_select.options[i].value,
+        tblSrc[source_cat_select.options[i].value] = {
             innerText: source_cat_select.options[i].innerText,
             selected: source_cat_select.options[i].selected
-        })
+        }
         source_cat_select.remove(i);
     }
     for (let i=dest_cat_select.options.length-1; i>=0; i--) {
-        tblDest.push({
-            value: dest_cat_select.options[i].value,
+        tblDest[dest_cat_select.options[i].value] = {
             innerText: dest_cat_select.options[i].innerText,
             selected: dest_cat_select.options[i].selected
-        })
+        }
         dest_cat_select.remove(i);
     }
 
@@ -51,18 +49,23 @@ const JTGH_WPHGP_handleCategoriesBasc = (option) => {
     // Logique de manipulation des tableaux
     switch(option) {
         case '>>':
-            // for(let src_opt in tblSrc) {
-            //     tblDest[src_opt] = tblSrc[src_opt];
-            //     delete tblSrc[src_opt];
-            // }
-            break;
+            const srcEntries = Object.entries(tblSrc);
+            for(let i=0; i<srcEntries.length; i++) {
+                tblDest[srcEntries[i][0]] = {
+                    innerText: srcEntries[i][1].innerText
+                }
+                delete tblSrc[srcEntries[i][0]];
+            }
         case '>':
             break;
         case '<<':
-            // for(let dest_opt in tblDest) {
-            //     tblSrc[dest_opt] = tblDest[dest_opt];
-            //     delete tblDest[dest_opt];
-            // }
+            const destEntries = Object.entries(tblDest);
+            for(let i=0; i<destEntries.length; i++) {
+                tblSrc[destEntries[i][0]] = {
+                    innerText: destEntries[i][1].innerText
+                }
+                delete tblDest[destEntries[i][0]];
+            }
             break;
         case '<':
             break;
@@ -88,15 +91,15 @@ const JTGH_WPHGP_handleCategoriesBasc = (option) => {
     // Et remplissage des selects avant de quitter
     sortedTblSrc.forEach((value) => {
         let new_src_opt = document.createElement('option');
-        new_src_opt.value = value[1].value;
+        new_src_opt.value = value[0];
         new_src_opt.innerText = value[1].innerText;
         source_cat_select.appendChild(new_src_opt);
     })
     sortedTblDest.forEach((value) => {
         let new_dest_opt = document.createElement('option');
-        new_dest_opt.value = value[1].value;
+        new_dest_opt.value = value[0];
         new_dest_opt.innerText = value[1].innerText;
-        source_cat_select.appendChild(new_dest_opt);
+        dest_cat_select.appendChild(new_dest_opt);
     })
 
 }

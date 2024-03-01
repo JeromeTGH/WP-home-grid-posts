@@ -22,5 +22,4 @@
         require(JTGH_WPHGP_ROOT_DIRECTORY.'/pages_and_sections/footer.php');
     }
 
-
 ?>

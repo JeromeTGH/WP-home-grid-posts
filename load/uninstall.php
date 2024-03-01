@@ -12,6 +12,7 @@
 
         // Effacement des options
         JTGH_delete_option('activation_date');
+        JTGH_delete_option('shortcode_name');
 
     }
 

@@ -18,6 +18,7 @@
     
         // Création/enregistrement des options
         JTGH_write_option('activation_date', time());
+        JTGH_write_option('shortcode_name', JTGH_WPHGP_SHORTCODE_NAME);
 
     }
 

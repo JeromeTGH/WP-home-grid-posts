@@ -1,3 +1,7 @@
+.JTGH_WPHGP_texte_gras {
+    font-weight: bold;
+}
+
 .JTGH_WPHGP_red_color {
     color: red;
 }
@@ -12,8 +16,10 @@
     font-weight: bold;
 }
 
-.JTGH_WPHGP_table_layout {
-    width: 99%;
-    border: 1px solid #E7E7E7;
-    padding: 10px 0px;
+.JTGH_WPHGP_home_layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 1rem;
 }

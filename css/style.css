@@ -16,10 +16,37 @@
     font-weight: bold;
 }
 
+.JTGH_WPHGP_center_div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 .JTGH_WPHGP_home_layout {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 4rem 1rem;
+}
+
+.JTGH_WPHGP_categories_layout {
+    display: grid;
+    grid-template-columns: 1fr min-content 1fr;
+    column-gap: 1%;
+    width: 100%;
+}
+
+.JTGH_WPHGP_select_cat_layout {
+    width: 100%;
+    max-width: 20rem!important;
+    min-height: 20rem!important;
+}
+
+.JTGH_WPHGP_cat_btn_bascul {
+    font-size: 1.2rem;
+    padding: 0.6rem;
+    margin: 0.4rem 0rem;
+    min-width: 4rem;
 }

@@ -1,4 +1,3 @@
-<h2>Liste des catégories (brut)</h2>
 <?php
 
     // Récupération du lien vers la BDD WP
@@ -12,15 +11,30 @@
 
     $resultat_listing_categories = $wpdb->get_results($rqt_listing_categories);
 
-    foreach($resultat_listing_categories as $row)
-    {
-        echo 'ID=<strong>&nbsp;'.esc_attr($row->term_id).'&nbsp;</strong>';
-        echo '&nbsp;&nbsp;&nbsp;&nbsp;';
-        echo 'NAME=<strong>&nbsp;'.esc_attr($row->name).'&nbsp;</strong>';
-        echo '<br>';
-    }
-    echo '<br>';
-    echo '<br>';
-
 ?>
-<h2>Catégories à prendre en compte</h2>
+<h1>CATÉGORIES (plugin WPHGP)</h1>
+<hr />
+<br>
+<div class="JTGH_WPHGP_categories_layout">
+    <div class="JTGH_WPHGP_center_div">
+        <h2>Ensemble des catégories</h2>
+        <select class="JTGH_WPHGP_select_cat_layout" name="categories_source" id="categories_source" multiple>
+            <?php
+                foreach($resultat_listing_categories as $row) {
+                    echo '<option value="'.$row->term_id.'">'.$row->name.'</option>';
+                }
+            ?>
+        </select>
+    </div>
+    <div class="JTGH_WPHGP_center_div">
+        <button class="JTGH_WPHGP_cat_btn_bascul">&gt;&gt;</button>
+        <button class="JTGH_WPHGP_cat_btn_bascul">&gt;</button>
+        <button class="JTGH_WPHGP_cat_btn_bascul">&lt;</button>
+        <button class="JTGH_WPHGP_cat_btn_bascul">&lt;&lt;</button>
+    </div>
+    <div class="JTGH_WPHGP_center_div">
+        <h2>Ensemble à prendre en compte</h2>
+        <select class="JTGH_WPHGP_select_cat_layout" name="categories_dest" id="categories_dest" multiple>
+        </select>
+    </div>
+</div>

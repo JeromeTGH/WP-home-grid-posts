@@ -11,11 +11,19 @@
     // Fonction qui retourne le code HTML correspondant au shortcode appelé
     function JTGH_WPHGP_display_content($shortcode_parameters) {
 
-        // Récupération du lien vers la BDD, pour pouvoir faire des requêtes en suivant
+        // Récupération du lien vers la BDD, pour pouvoir faire des requêtes ensuite
         global $wpdb;
+
+
+
+
+
+
+
+
         
         // À développer par la suite
-        return '';
+        return '(retour shortcode)';
 
     }
 

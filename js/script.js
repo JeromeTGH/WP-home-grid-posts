@@ -21,6 +21,7 @@ const JTGH_WPHGP_handleCategoriesBasc = (option) => {
     const source_cat_select = document.getElementById("JTGH_WPHGP_categories_source");
     const dest_cat_select = document.getElementById("JTGH_WPHGP_categories_dest");
 
+    
     // Chargement des données dans des objets, en vidant les selects au fur et à mesure
     const tblSrc = {};
     const tblDest = {};
@@ -41,11 +42,6 @@ const JTGH_WPHGP_handleCategoriesBasc = (option) => {
     }
 
 
-
-
-
-
-
     // Logique de manipulation des tableaux
     switch(option) {
         case '>>':
@@ -57,6 +53,15 @@ const JTGH_WPHGP_handleCategoriesBasc = (option) => {
                 delete tblSrc[srcEntries[i][0]];
             }
         case '>':
+            const srcEntries2 = Object.entries(tblSrc);
+            for(let i=0; i<srcEntries2.length; i++) {
+                if(tblSrc[srcEntries2[i][0]].selected !== false) {
+                    tblDest[srcEntries2[i][0]] = {
+                        innerText: srcEntries2[i][1].innerText
+                    }
+                    delete tblSrc[srcEntries2[i][0]];
+                }
+            }
             break;
         case '<<':
             const destEntries = Object.entries(tblDest);
@@ -68,11 +73,19 @@ const JTGH_WPHGP_handleCategoriesBasc = (option) => {
             }
             break;
         case '<':
+            const destEntries2 = Object.entries(tblDest);
+            for(let i=0; i<destEntries2.length; i++) {
+                if(tblDest[destEntries2[i][0]].selected !== false) {
+                    tblSrc[destEntries2[i][0]] = {
+                        innerText: destEntries2[i][1].innerText
+                    }
+                    delete tblDest[destEntries2[i][0]];
+                }
+            }
             break;
         default:
             break;
     }
-
 
 
     // Tri alphabétique des tableaux, en fonction de la colonne "innerText"
@@ -86,7 +99,7 @@ const JTGH_WPHGP_handleCategoriesBasc = (option) => {
         if (a[1].innerText > b[1].innerText) {return 1;}
         return 0;
     });
-    
+
 
     // Et remplissage des selects avant de quitter
     sortedTblSrc.forEach((value) => {

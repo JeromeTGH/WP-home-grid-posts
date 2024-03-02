@@ -17,25 +17,25 @@
 <hr />
 <br>
 <div class="JTGH_WPHGP_categories_layout">
-    <div class="JTGH_WPHGP_center_div">
-        <h2>Ensemble des catégories</h2>
-        <select class="JTGH_WPHGP_select_cat_layout" name="JTGH_WPHGP_categories_source" id="JTGH_WPHGP_categories_source" multiple>
-            <?php
-                foreach($resultat_listing_categories as $row) {
-                    echo '<option value="'.$row->term_id.'">'.$row->name.'</option>';
-                }
-            ?>
-        </select>
-    </div>
-    <div class="JTGH_WPHGP_center_div">
+    <h2 style="grid-area: cat_title_gauche;" class="JTGH_WPHGP_texte_align_center">Ensemble des catégories</h2>
+    <select style="grid-area: cat_select_gauche;" class="JTGH_WPHGP_select_cat_layout" name="JTGH_WPHGP_categories_source" id="JTGH_WPHGP_categories_source" multiple>
+        <?php
+            foreach($resultat_listing_categories as $row) {
+                echo '<option value="'.$row->term_id.'">'.$row->name.'</option>';
+            }
+        ?>
+    </select>
+    <div style="grid-area: cat_btn_bascul;" class="JTGH_WPHGP_center_div_column">
         <button class="JTGH_WPHGP_cat_btn_bascul" onclick="JTGH_WPHGP_handleCategoriesBasc('>>')">&gt;&gt;</button>
         <button class="JTGH_WPHGP_cat_btn_bascul" onclick="JTGH_WPHGP_handleCategoriesBasc('>')">&gt;</button>
         <button class="JTGH_WPHGP_cat_btn_bascul" onclick="JTGH_WPHGP_handleCategoriesBasc('<')">&lt;</button>
         <button class="JTGH_WPHGP_cat_btn_bascul" onclick="JTGH_WPHGP_handleCategoriesBasc('<<')">&lt;&lt;</button>
     </div>
-    <div class="JTGH_WPHGP_center_div">
-        <h2>Ensemble à prendre en compte</h2>
-        <select class="JTGH_WPHGP_select_cat_layout" name="JTGH_WPHGP_categories_dest" id="JTGH_WPHGP_categories_dest" multiple>
-        </select>
+    <h2 style="grid-area: cat_title_droite;" class="JTGH_WPHGP_texte_align_center">Ensemble à prendre en compte</h2>
+    <select style="grid-area: cat_select_droite;" class="JTGH_WPHGP_select_cat_layout" name="JTGH_WPHGP_categories_dest" id="JTGH_WPHGP_categories_dest" multiple>
+    </select>
+    <div style="grid-area: cat_btn_up_down;" class="JTGH_WPHGP_center_div_column">
+        <button class="JTGH_WPHGP_cat_btn_bascul" onclick="JTGH_WPHGP_handleCategoriesUpDown('↑')">↑</button>
+        <button class="JTGH_WPHGP_cat_btn_bascul" onclick="JTGH_WPHGP_handleCategoriesUpDown('↓')">↓</button>
     </div>
 </div>

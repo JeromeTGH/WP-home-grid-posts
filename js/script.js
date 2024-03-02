@@ -138,7 +138,6 @@ const JTGH_WPHGP_handleCategoriesBasc = (option) => {
 }
 
 
-
 // ============================================
 // Function : JTGH_WPHGP_handleCategoriesUpDown
 // ============================================
@@ -199,5 +198,24 @@ const JTGH_WPHGP_handleCategoriesUpDown = (option) => {
         dest_cat_select.appendChild(new_dest_opt);
     })
 
+}
+
+
+// ============================================
+// Function : JTGH_WPHGP_unselect_all_cat
+// ============================================
+const JTGH_WPHGP_unselect_all_cat = () => {
+
+    // Ciblage des select
+    const source_cat_select = document.getElementById("JTGH_WPHGP_categories_source");
+    const dest_cat_select = document.getElementById("JTGH_WPHGP_categories_dest");
+
+    // Déselection de ce qui est éventuellement sélectionné, dans les selects
+    for (let i=source_cat_select.options.length-1; i>=0; i--) {
+        source_cat_select.options[i].selected = false;
+    }
+    for (let i=dest_cat_select.options.length-1; i>=0; i--) {
+        dest_cat_select.options[i].selected = false;
+    }
 
 }

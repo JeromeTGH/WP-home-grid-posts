@@ -69,3 +69,11 @@
     margin: 0.4rem 0rem;
     min-width: 4rem;
 }
+
+.JTGH_WPHGP_categories_bottom_btns {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 2%;
+    margin: 0 10%;
+    width: 80%;
+}

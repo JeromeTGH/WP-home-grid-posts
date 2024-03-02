@@ -39,3 +39,10 @@
         <button class="JTGH_WPHGP_cat_btn_bascul" onclick="JTGH_WPHGP_handleCategoriesUpDown('↓')">↓</button>
     </div>
 </div>
+<br>
+<br>
+<div class="JTGH_WPHGP_categories_bottom_btns">
+    <button class="JTGH_WPHGP_cat_btn_bascul" onClick="window.location.reload();">Annuler les modifications non enregistrées</button>
+    <button class="JTGH_WPHGP_cat_btn_bascul" onclick="JTGH_WPHGP_unselect_all_cat()">Tout désélectionner dans les listes</button>
+    <button class="JTGH_WPHGP_cat_btn_bascul" onclick="JTGH_WPHGP_update_cats()">Enregistrer toutes les modifications</button>
+</div>

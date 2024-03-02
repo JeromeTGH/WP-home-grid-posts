@@ -17,9 +17,10 @@ const JTGH_WPHGP_handleClickOnCopyButton = () => {
 // ==========================================
 const JTGH_WPHGP_handleCategoriesBasc = (option) => {
 
-    // Pointage des select
+    // Ciblage des éléments dont on aura besoin
     const source_cat_select = document.getElementById("JTGH_WPHGP_categories_source");
     const dest_cat_select = document.getElementById("JTGH_WPHGP_categories_dest");
+    const cat_list_input = document.getElementById("JTGH_WPHGP_categories_choisies");
 
     
     // Chargement des données dans des tableaux
@@ -121,7 +122,7 @@ const JTGH_WPHGP_handleCategoriesBasc = (option) => {
     });
 
 
-    // Et remplissage des selects avant de quitter
+    // Remplissage des selects
     sortedTblSrc.forEach((lg) => {
         let new_src_opt = document.createElement('option');
         new_src_opt.value = lg.value;
@@ -135,6 +136,16 @@ const JTGH_WPHGP_handleCategoriesBasc = (option) => {
         dest_cat_select.appendChild(new_dest_opt);
     })
 
+
+    // Mémorisation des chiffres envoyés dans le select 'dest'
+    const lst_cat = [];
+    tblDest.forEach((lg) => {
+        if(!isNaN(parseInt(lg.value, 10))) {
+            lst_cat.push(parseInt(lg.value,10));
+        }
+    })
+    cat_list_input.value = JSON.stringify(lst_cat, null, 2);
+
 }
 
 
@@ -143,8 +154,9 @@ const JTGH_WPHGP_handleCategoriesBasc = (option) => {
 // ============================================
 const JTGH_WPHGP_handleCategoriesUpDown = (option) => {
 
-    // Pointage du select de destination
+    // Ciblage des éléments dont nous aurons besoins ici
     const dest_cat_select = document.getElementById("JTGH_WPHGP_categories_dest");
+    const cat_list_input = document.getElementById("JTGH_WPHGP_categories_choisies");
 
     
     // Chargement des données dans un tableau
@@ -198,12 +210,22 @@ const JTGH_WPHGP_handleCategoriesUpDown = (option) => {
         dest_cat_select.appendChild(new_dest_opt);
     })
 
+
+    // Mémorisation des chiffres envoyés dans le select 'dest'
+    const lst_cat = [];
+    tblDest.forEach((lg) => {
+        if(!isNaN(parseInt(lg.value, 10))) {
+            lst_cat.push(parseInt(lg.value,10));
+        }
+    })
+    cat_list_input.value = JSON.stringify(lst_cat, null, 2);
+
 }
 
 
-// ============================================
+// ======================================
 // Function : JTGH_WPHGP_unselect_all_cat
-// ============================================
+// ======================================
 const JTGH_WPHGP_unselect_all_cat = () => {
 
     // Ciblage des select

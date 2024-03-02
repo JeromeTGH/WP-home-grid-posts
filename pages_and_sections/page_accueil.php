@@ -1,3 +1,8 @@
+<?php
+	// Protection contre accès directs
+	if (!defined('ABSPATH'))
+		exit;
+?>
 <h1>ACCUEIL (plugin WPHGP)</h1>
 <hr />
 <br>

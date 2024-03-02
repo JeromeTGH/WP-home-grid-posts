@@ -22,7 +22,7 @@ const JTGH_WPHGP_handleCategoriesBasc = (option) => {
     const dest_cat_select = document.getElementById("JTGH_WPHGP_categories_dest");
 
     
-    // Chargement des données dans des objets
+    // Chargement des données dans des tableaux
     const tblSrc = [];
     const tblDest = [];
 
@@ -134,5 +134,70 @@ const JTGH_WPHGP_handleCategoriesBasc = (option) => {
         new_dest_opt.innerText = lg.innerText;
         dest_cat_select.appendChild(new_dest_opt);
     })
+
+}
+
+
+
+// ============================================
+// Function : JTGH_WPHGP_handleCategoriesUpDown
+// ============================================
+const JTGH_WPHGP_handleCategoriesUpDown = (option) => {
+
+    // Pointage du select de destination
+    const dest_cat_select = document.getElementById("JTGH_WPHGP_categories_dest");
+
+    
+    // Chargement des données dans un tableau
+    const tblDest = [];
+    for (let i=0; i<dest_cat_select.options.length; i++) {
+        tblDest.push({
+            value: dest_cat_select.options[i].value,
+            innerText: dest_cat_select.options[i].innerText,
+            selected: dest_cat_select.options[i].selected
+        });
+    }
+
+    
+    // Vidage du select
+    for (let i=dest_cat_select.options.length-1; i>=0; i--) {
+        dest_cat_select.remove(i);
+    }
+
+
+    // Logique de manipulation du tableau
+    switch(option) {
+        case '↑':
+            for (let i=1; i<tblDest.length; i++) {              // On commence à 1, car on ne peut pas remonter une valeur qui serait déjà tout en haut
+                if(tblDest[i].selected && !tblDest[i-1].selected) {
+                    const oldPrevious = tblDest[i-1];
+                    tblDest[i-1] = tblDest[i];
+                    tblDest[i] = oldPrevious;
+                }
+            }
+            break;
+        case '↓':
+            for (let i=tblDest.length-2; i>=0; i--) {            // On commence à length-2 de la fin, car on ne peut pas descendre une valeur qui serait déjà tout en bas
+                if(tblDest[i].selected && !tblDest[i+1].selected) {
+                    const oldNext = tblDest[i+1];
+                    tblDest[i+1] = tblDest[i];
+                    tblDest[i] = oldNext;
+                }
+            }
+            break;
+        default:
+            break;
+    }
+
+
+    // Re-remplissage du select, avec mémorisation des sélections
+    tblDest.forEach((lg) => {
+        let new_dest_opt = document.createElement('option');
+        new_dest_opt.value = lg.value;
+        new_dest_opt.innerText = lg.innerText;
+        new_dest_opt.selected = lg.selected;
+        dest_cat_select.appendChild(new_dest_opt);
+    })
+
 
 }

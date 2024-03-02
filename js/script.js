@@ -22,22 +22,30 @@ const JTGH_WPHGP_handleCategoriesBasc = (option) => {
     const dest_cat_select = document.getElementById("JTGH_WPHGP_categories_dest");
 
     
-    // Chargement des données dans des objets, en vidant les selects au fur et à mesure
-    const tblSrc = {};
-    const tblDest = {};
+    // Chargement des données dans des objets
+    const tblSrc = [];
+    const tblDest = [];
 
-    for (let i=source_cat_select.options.length-1; i>=0; i--) {
-        tblSrc[source_cat_select.options[i].value] = {
+    for (let i=0; i<source_cat_select.options.length; i++) {
+        tblSrc.push({
+            value: source_cat_select.options[i].value,
             innerText: source_cat_select.options[i].innerText,
             selected: source_cat_select.options[i].selected
-        }
+        });
+    }
+    for (let i=0; i<dest_cat_select.options.length; i++) {
+        tblDest.push({
+            value: dest_cat_select.options[i].value,
+            innerText: dest_cat_select.options[i].innerText,
+            selected: dest_cat_select.options[i].selected
+        });
+    }
+
+    // Vidage des selects
+    for (let i=source_cat_select.options.length-1; i>=0; i--) {
         source_cat_select.remove(i);
     }
     for (let i=dest_cat_select.options.length-1; i>=0; i--) {
-        tblDest[dest_cat_select.options[i].value] = {
-            innerText: dest_cat_select.options[i].innerText,
-            selected: dest_cat_select.options[i].selected
-        }
         dest_cat_select.remove(i);
     }
 
@@ -45,41 +53,58 @@ const JTGH_WPHGP_handleCategoriesBasc = (option) => {
     // Logique de manipulation des tableaux
     switch(option) {
         case '>>':
-            const srcEntries = Object.entries(tblSrc);
-            for(let i=0; i<srcEntries.length; i++) {
-                tblDest[srcEntries[i][0]] = {
-                    innerText: srcEntries[i][1].innerText
-                }
-                delete tblSrc[srcEntries[i][0]];
+            for (let i=0; i<tblSrc.length; i++) {
+                tblDest.push({
+                    value: tblSrc[i].value,
+                    innerText: tblSrc[i].innerText,
+                    selected: tblSrc[i].selected
+                });
             }
+            for (let i=tblSrc.length-1; i>=0; i--) {
+                tblSrc.splice(i, 1);
+            }
+            break;
         case '>':
-            const srcEntries2 = Object.entries(tblSrc);
-            for(let i=0; i<srcEntries2.length; i++) {
-                if(tblSrc[srcEntries2[i][0]].selected !== false) {
-                    tblDest[srcEntries2[i][0]] = {
-                        innerText: srcEntries2[i][1].innerText
-                    }
-                    delete tblSrc[srcEntries2[i][0]];
+            for (let i=0; i<tblSrc.length; i++) {
+                if(tblSrc[i].selected) {
+                    tblDest.push({
+                        value: tblSrc[i].value,
+                        innerText: tblSrc[i].innerText,
+                        selected: tblSrc[i].selected
+                    });
+                }
+            }
+            for (let i=tblSrc.length-1; i>=0; i--) {
+                if(tblSrc[i].selected) {
+                    tblSrc.splice(i, 1);
                 }
             }
             break;
         case '<<':
-            const destEntries = Object.entries(tblDest);
-            for(let i=0; i<destEntries.length; i++) {
-                tblSrc[destEntries[i][0]] = {
-                    innerText: destEntries[i][1].innerText
-                }
-                delete tblDest[destEntries[i][0]];
+            for (let i=0; i<tblDest.length; i++) {
+                tblSrc.push({
+                    value: tblDest[i].value,
+                    innerText: tblDest[i].innerText,
+                    selected: tblDest[i].selected
+                });
+            }
+            for (let i=tblDest.length-1; i>=0; i--) {
+                tblDest.splice(i, 1);
             }
             break;
         case '<':
-            const destEntries2 = Object.entries(tblDest);
-            for(let i=0; i<destEntries2.length; i++) {
-                if(tblDest[destEntries2[i][0]].selected !== false) {
-                    tblSrc[destEntries2[i][0]] = {
-                        innerText: destEntries2[i][1].innerText
-                    }
-                    delete tblDest[destEntries2[i][0]];
+            for (let i=0; i<tblDest.length; i++) {
+                if(tblDest[i].selected) {
+                    tblSrc.push({
+                        value: tblDest[i].value,
+                        innerText: tblDest[i].innerText,
+                        selected: tblDest[i].selected
+                    });
+                }
+            }
+            for (let i=tblDest.length-1; i>=0; i--) {
+                if(tblDest[i].selected) {
+                    tblDest.splice(i, 1);
                 }
             }
             break;
@@ -88,30 +113,25 @@ const JTGH_WPHGP_handleCategoriesBasc = (option) => {
     }
 
 
-    // Tri alphabétique des tableaux, en fonction de la colonne "innerText"
-    const sortedTblSrc = Object.entries(tblSrc).sort((a, b) => {
-        if (a[1].innerText < b[1].innerText) {return -1;}
-        if (a[1].innerText > b[1].innerText) {return 1;}
-        return 0;
-    });
-    const sortedTblDest = Object.entries(tblDest).sort((a, b) => {
-        if (a[1].innerText < b[1].innerText) {return -1;}
-        if (a[1].innerText > b[1].innerText) {return 1;}
+    // Tri alphabétique de la liste source (uniquement), basé sur la colonne "innerText"
+    const sortedTblSrc = tblSrc.sort((a, b) => {
+        if (a.innerText < b.innerText) {return -1;}
+        if (a.innerText > b.innerText) {return 1;}
         return 0;
     });
 
 
     // Et remplissage des selects avant de quitter
-    sortedTblSrc.forEach((value) => {
+    sortedTblSrc.forEach((lg) => {
         let new_src_opt = document.createElement('option');
-        new_src_opt.value = value[0];
-        new_src_opt.innerText = value[1].innerText;
+        new_src_opt.value = lg.value;
+        new_src_opt.innerText = lg.innerText;
         source_cat_select.appendChild(new_src_opt);
     })
-    sortedTblDest.forEach((value) => {
+    tblDest.forEach((lg) => {
         let new_dest_opt = document.createElement('option');
-        new_dest_opt.value = value[0];
-        new_dest_opt.innerText = value[1].innerText;
+        new_dest_opt.value = lg.value;
+        new_dest_opt.innerText = lg.innerText;
         dest_cat_select.appendChild(new_dest_opt);
     })
 

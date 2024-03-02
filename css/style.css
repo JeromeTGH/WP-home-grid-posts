@@ -11,13 +11,23 @@
 }
 
 .JTGH_WPHGP_notice_alert {
-    color: red;
-    font-weight: bold;
+    color: #A01020;
+    background-color: #F0D0D0;
+    border: 1px solid #F0C0B0;
+    border-radius: 4px;
+    font-weight: 600;
+    padding: 0.6rem;
+    margin-right: 1rem;
 }
 
 .JTGH_WPHGP_notice_success {
-    color: green;
-    font-weight: bold;
+    color: #108020;
+    background-color: #D0F0E0;
+    border: 1px solid #A0D0C0;
+    border-radius: 4px;
+    font-weight: 600;
+    padding: 0.6rem;
+    margin-right: 1rem;
 }
 
 .JTGH_WPHGP_center_div_column {

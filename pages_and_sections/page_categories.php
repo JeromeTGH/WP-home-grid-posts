@@ -1,3 +1,6 @@
+<h1>CATÉGORIES (plugin WPHGP)</h1>
+<hr />
+<br>
 <?php
 
 	// Protection contre accès directs
@@ -9,19 +12,11 @@
     $_GET = stripslashes_deep($_GET);
     $_POST = stripslashes_deep($_POST);
 
-
     // Tableau qui contiendra les éventuelles catégories sélectionnées
     $tblSelectedCategories = array();
 
-    // Récupération du "numéro" de message à afficher, si il y a
-    $app_msg = '';
-    if(isset($_GET['appmsg'])){
-        $app_msg = intval($_GET['appmsg']);
-    }
-    if($app_msg == 1) { ?>
-        <div class="JTGH_WPHGP_notice_success">Mise à jour des catégories réussie !</div> <?php
-    }
-
+    // Drapeau de mise à jour
+    $maj_effectuee = false;
 
     // Traitement des données postées, le cas échéant
     if(isset($_POST) && isset($_POST['btnUpdateCategories'])) {
@@ -63,6 +58,7 @@
 
         // Enregistrement des nouvelles options
         JTGH_write_option('categories_a_afficher', json_encode($tblSelectedCategories));
+        $maj_effectuee = true;
 
     }
 
@@ -103,9 +99,11 @@
 
     
 ?>
-<h1>CATÉGORIES (plugin WPHGP)</h1>
-<hr />
-<br>
+<?php
+    if($maj_effectuee) {?>
+        <div class="JTGH_WPHGP_notice_success">Mise à jour effectuée avec succès !</div> <?php
+    }
+?>
 <form method="post" action="admin.php?page=<?php echo JTGH_WPHGP_PREFIX.'page_categories'; ?>&action=updateCat">
     <?php
         wp_nonce_field(JTGH_WPHGP_PREFIX.'updateCat');

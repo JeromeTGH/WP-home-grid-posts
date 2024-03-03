@@ -30,6 +30,10 @@
         JTGH_write_option('shortcode_name', JTGH_WPHGP_SHORTCODE_NAME);
         JTGH_write_option('categories_a_afficher', '[]');
         JTGH_write_option('couleurs_des_categories', json_encode($liste_de_couleurs));
+        JTGH_write_option('nbre_d_articles_par_page', 12);
+        JTGH_write_option('nbre_de_colonnes_d_affichage', 4);
+        JTGH_write_option('afficher_metadonnees', true);
+        JTGH_write_option('longueur_maxi_extract', 250);
 
     }
 

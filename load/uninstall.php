@@ -15,7 +15,10 @@
         JTGH_delete_option('shortcode_name');
         JTGH_delete_option('categories_a_afficher');
         JTGH_delete_option('couleurs_des_categories');
-
+        JTGH_delete_option('nbre_d_articles_par_page');
+        JTGH_delete_option('nbre_de_colonnes_d_affichage');
+        JTGH_delete_option('afficher_metadonnees');
+        JTGH_delete_option('longueur_maxi_extract');
     }
 
 ?>

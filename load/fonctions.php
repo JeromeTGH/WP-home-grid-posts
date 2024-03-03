@@ -32,4 +32,11 @@
         delete_option(JTGH_WPHGP_PREFIX.$nom_de_l_option);
     } 
 
+    // ===============================
+    // Fonction : JTGH_test_hexa_color
+    // ===============================
+    function JTGH_test_hexa_color($hexa_val) {
+        $hex_color_pattern = "/^[0-9a-fA-F]{0,8}$/i";
+        return preg_match($hex_color_pattern, $hexa_val);
+    }
 ?>

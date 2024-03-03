@@ -80,6 +80,81 @@
         $tblCouleursDesCategories = json_decode(JTGH_read_option('couleurs_des_categories'));
     }
 
+?>
+<?php
+
+    // Drapeaux des messages à afficher, accessoirement
+    $maj_effectuee = false;
+    $echec_de_maj = false;
+    $modifs_annulees = false;
+
+    // Traitement des données postées, le cas échéant
+    if(isset($_POST) && isset($_POST['btnCancelColorModifications'])) {
+
+        // Vérification NONCE
+        if(!isset($_REQUEST['_wpnonce']) || !wp_verify_nonce($_REQUEST['_wpnonce'], JTGH_WPHGP_PREFIX.'updateColors')) {
+            wp_nonce_ays(JTGH_WPHGP_PREFIX.'page_couleurs');
+            exit;
+        }
+
+        // Levée du drapeau correspondant
+        $modifs_annulees = true;
+        
+    }
+
+
+    // Traitement des données postées, le cas échéant
+    if(isset($_POST) && isset($_POST['btnUpdateCatColors'])) {
+
+        // Vérification NONCE
+        if(!isset($_REQUEST['_wpnonce']) || !wp_verify_nonce($_REQUEST['_wpnonce'], JTGH_WPHGP_PREFIX.'updateColors')) {
+            wp_nonce_ays(JTGH_WPHGP_PREFIX.'page_couleurs');
+            exit;
+        }
+
+        // Vérification de la présence des données attendues
+        if(!isset($_POST['JTGH_WPHGP_hex_code_0'])) {
+            ?><div class="JTGH_WPHGP_notice_alert">Valeur JTGH_WPHGP_hex_code_<?php echo '0'; ?> manquante...</div><?php
+            $echec_de_maj = true;
+        }
+        foreach($tblCategoriesChoisies as $cat_choisie_id) {
+            if(!isset($_POST['JTGH_WPHGP_hex_code_'.$cat_choisie_id])) {
+                ?><div class="JTGH_WPHGP_notice_alert">Valeur JTGH_WPHGP_hex_code_<?php echo $cat_choisie_id; ?> manquante...</div><?php
+                $echec_de_maj = true;
+            }
+        }
+        
+        // Test la validité des données transmises
+        if(!JTGH_test_hexa_color($_POST['JTGH_WPHGP_hex_code_0'])) {
+            ?><div class="JTGH_WPHGP_notice_alert">Valeur JTGH_WPHGP_hex_code_<?php echo '0'; ?>="<?php echo $_POST['JTGH_WPHGP_hex_code_0']; ?>" non conforme...</div><?php
+            $echec_de_maj = true;
+        }
+        foreach($tblCategoriesChoisies as $cat_choisie_id) {
+            if(!JTGH_test_hexa_color($_POST['JTGH_WPHGP_hex_code_'.$cat_choisie_id])) {
+                ?><div class="JTGH_WPHGP_notice_alert">Valeur JTGH_WPHGP_hex_code_<?php echo $cat_choisie_id; ?>="<?php echo $_POST['JTGH_WPHGP_hex_code_'.$cat_choisie_id]; ?>" non conforme...</div><?php
+                $echec_de_maj = true;
+            }
+        }
+
+        if(!$echec_de_maj) {
+            // Mise à jour de la liste actuelle des couleurs de catégories
+            for($i=0 ; $i < count($tblCouleursDesCategories); $i++) {
+                if(isset($_POST['JTGH_WPHGP_hex_code_'.$tblCouleursDesCategories[$i]->cat_id])) {
+                    $tblCouleursDesCategories[$i]->couleur = $_POST['JTGH_WPHGP_hex_code_'.$tblCouleursDesCategories[$i]->cat_id];
+                }
+            }
+    
+            // Mise à jour en BDD, et retéléchargement des données
+            JTGH_write_option('couleurs_des_categories', json_encode($tblCouleursDesCategories));
+            $tblCouleursDesCategories = json_decode(JTGH_read_option('couleurs_des_categories'));
+        }
+
+        $maj_effectuee = true;
+
+    }
+
+?>
+<?php
 
     // Création d'un tableau d'affichage
     $tableau_des_couleurs_de_categories_a_afficher = array();
@@ -106,64 +181,17 @@
 
 ?>
 <?php
+    /*
 
-    // Drapeaux des messages à afficher, accessoirement
-    $maj_effectuee = false;
-    $modifs_annulees = false;
-
-    // Traitement des données postées, le cas échéant
-    if(isset($_POST) && isset($_POST['btnCancelColorModifications'])) {
-
-        // Vérification NONCE
-        if(!isset($_REQUEST['_wpnonce']) || !wp_verify_nonce($_REQUEST['_wpnonce'], JTGH_WPHGP_PREFIX.'updateColors')) {
-            wp_nonce_ays(JTGH_WPHGP_PREFIX.'page_couleurs');
-            exit;
-        }
-
-        // Levée du drapeau correspondant
-        $modifs_annulees = true;
-        
-    }
-
-    // Traitement des données postées, le cas échéant
-    if(isset($_POST) && isset($_POST['btnUpdateCatColors'])) {
-
-        // Vérification NONCE
-        if(!isset($_REQUEST['_wpnonce']) || !wp_verify_nonce($_REQUEST['_wpnonce'], JTGH_WPHGP_PREFIX.'updateColors')) {
-            wp_nonce_ays(JTGH_WPHGP_PREFIX.'page_couleurs');
-            exit;
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-        $maj_effectuee = true;
-
-    }
-
-
-
-
-
-?>
-<?php
-
+    // Pour débug, si besoin
     echo '<br>';
     echo '<strong>Tableau des couleurs</strong> = '.json_encode($tblCouleursDesCategories).'<br>';
     echo '<strong>Catégories sélectionnées</strong> = '.json_encode($tblCategoriesChoisies).'<br>';
     echo '<strong>Tableau à afficher</strong> = '.json_encode($tableau_des_couleurs_de_categories_a_afficher).'<br>';
     echo '<br>';
     echo '<br>';
-    
+
+    */
 ?>
 <?php
     if($modifs_annulees) {?>
@@ -171,10 +199,16 @@
     }
 ?>
 <?php
-    if($maj_effectuee) {?>
+    if($maj_effectuee && !$echec_de_maj) {?>
         <div class="JTGH_WPHGP_notice_success">Mise à jour effectuée avec succès !</div> <?php
     }
 ?>
+<?php
+    if($maj_effectuee && $echec_de_maj) {?>
+        <div class="JTGH_WPHGP_notice_alert">Echec de la mise à jour...</div> <?php
+    }
+?>
+
 <form method="post" action="admin.php?page=<?php echo JTGH_WPHGP_PREFIX.'page_couleurs'; ?>">
     <div class="JTGH_WPHGP_colors_layout">
         <?php

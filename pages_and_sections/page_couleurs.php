@@ -104,19 +104,117 @@
         }
     }
 
+?>
+<?php
+
+    // Drapeaux des messages à afficher, accessoirement
+    $maj_effectuee = false;
+    $modifs_annulees = false;
+
+    // Traitement des données postées, le cas échéant
+    if(isset($_POST) && isset($_POST['btnCancelColorModifications'])) {
+
+        // Vérification NONCE
+        if(!isset($_REQUEST['_wpnonce']) || !wp_verify_nonce($_REQUEST['_wpnonce'], JTGH_WPHGP_PREFIX.'updateColors')) {
+            wp_nonce_ays(JTGH_WPHGP_PREFIX.'page_couleurs');
+            exit;
+        }
+
+        // Levée du drapeau correspondant
+        $modifs_annulees = true;
+        
+    }
+
+    // Traitement des données postées, le cas échéant
+    if(isset($_POST) && isset($_POST['btnUpdateCatColors'])) {
+
+        // Vérification NONCE
+        if(!isset($_REQUEST['_wpnonce']) || !wp_verify_nonce($_REQUEST['_wpnonce'], JTGH_WPHGP_PREFIX.'updateColors')) {
+            wp_nonce_ays(JTGH_WPHGP_PREFIX.'page_couleurs');
+            exit;
+        }
 
 
 
 
 
-    echo '<br>';
-    echo '<strong>Tableau des couleurs</strong> = '.json_encode($tblCouleursDesCategories).'<br>';
-    echo '<strong>Catégories sélectionnées</strong> = '.json_encode($tblCategoriesChoisies).'<br>';
-    echo '<strong>Tableau à afficher</strong> = '.json_encode($tableau_des_couleurs_de_categories_a_afficher).'<br>';
 
+
+
+
+
+
+
+
+        $maj_effectuee = true;
+
+    }
 
 
 
 
 
 ?>
+<?php
+
+    echo '<br>';
+    echo '<strong>Tableau des couleurs</strong> = '.json_encode($tblCouleursDesCategories).'<br>';
+    echo '<strong>Catégories sélectionnées</strong> = '.json_encode($tblCategoriesChoisies).'<br>';
+    echo '<strong>Tableau à afficher</strong> = '.json_encode($tableau_des_couleurs_de_categories_a_afficher).'<br>';
+    echo '<br>';
+    echo '<br>';
+    
+?>
+<?php
+    if($modifs_annulees) {?>
+        <div class="JTGH_WPHGP_notice_warning">Modifications non enregistrées annulées !</div> <?php
+    }
+?>
+<?php
+    if($maj_effectuee) {?>
+        <div class="JTGH_WPHGP_notice_success">Mise à jour effectuée avec succès !</div> <?php
+    }
+?>
+<form method="post" action="admin.php?page=<?php echo JTGH_WPHGP_PREFIX.'page_couleurs'; ?>">
+    <div class="JTGH_WPHGP_colors_layout">
+        <?php
+            wp_nonce_field(JTGH_WPHGP_PREFIX.'updateColors');
+        ?>
+        <table class="JTGH_WPHGP_colors_table">
+            <thead>
+                <tr>
+                    <th>N°</th>
+                    <th>Catégorie</th>
+                    <th>Code HEXA</th>
+                    <th>Aperçu couleur</th>
+                <tr>
+            </thead>
+            <tbody>
+                <?php
+                    for($idx_ligne=0 ; $idx_ligne < count($tableau_des_couleurs_de_categories_a_afficher); $idx_ligne++) {
+                ?> 
+                <tr>
+                    <td><?php echo $idx_ligne+1; ?></td>
+                    <td><?php echo $tableau_des_couleurs_de_categories_a_afficher[$idx_ligne]->name; ?></td>
+                    <td>#<input
+                        type="text"
+                        id="JTGH_WPHGP_hex_code_<?php echo $tableau_des_couleurs_de_categories_a_afficher[$idx_ligne]->cat_id; ?>"
+                        name="JTGH_WPHGP_hex_code_<?php echo $tableau_des_couleurs_de_categories_a_afficher[$idx_ligne]->cat_id; ?>"
+                        value="<?php echo $tableau_des_couleurs_de_categories_a_afficher[$idx_ligne]->couleur; ?>"
+                        onKeyDown="JTGH_WPHGP_mem_bloc_couleur(event)"
+                        onKeyUp="JTGH_WPHGP_maj_bloc_couleur(event)"
+                        alt="<?php echo $tableau_des_couleurs_de_categories_a_afficher[$idx_ligne]->cat_id; ?>"
+                    /></td>
+                    <td><span id="JTGH_WPHGP_color_bloc_<?php echo $tableau_des_couleurs_de_categories_a_afficher[$idx_ligne]->cat_id; ?>" class="JTGH_WPHGP_bloc_apercu_couleur" style="background: #<?php echo $tableau_des_couleurs_de_categories_a_afficher[$idx_ligne]->couleur; ?>">&nbsp;</span></td>
+                <tr>
+                <?php
+                    }
+                ?> 
+            </tbody>
+        </table>
+        <div class="JTGH_WPHGP_colors_bottom_btns">
+            <button class="JTGH_WPHGP_cat_btn_bascul" type="submit" name="btnCancelColorModifications">Annuler les modifications non enregistrées</button>
+            <button class="JTGH_WPHGP_cat_btn_bascul" type="submit" name="btnUpdateCatColors">Enregistrer toutes les modifications</button>
+        </div>
+    </div>
+</form>

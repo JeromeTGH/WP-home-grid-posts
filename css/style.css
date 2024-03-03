@@ -118,3 +118,33 @@
     border-radius: 8px;
     border: 1px solid #555555;
 }
+
+.JTGH_WPHGP_colors_layout {
+    padding: 2rem 4rem;
+}
+
+.JTGH_WPHGP_colors_table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 2rem;
+}
+.JTGH_WPHGP_colors_table th, .JTGH_WPHGP_colors_table td {
+    border: 1px solid;
+    padding: 0.4rem;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+.JTGH_WPHGP_bloc_apercu_couleur {
+    display: inline-block;
+    border: 1px solid black;
+    width: 4rem;
+}
+
+.JTGH_WPHGP_colors_bottom_btns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 2%;
+    margin: 0 10%;
+    width: 80%;
+}

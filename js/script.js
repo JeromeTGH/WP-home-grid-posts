@@ -241,3 +241,40 @@ const JTGH_WPHGP_unselect_all_cat = () => {
     }
 
 }
+
+// ======================================
+// Function : JTGH_WPHGP_mem_bloc_couleur
+// ======================================
+const JTGH_WPHGP_mem_bloc_couleur = (e) => {
+    // Mémorisation de cette valeur, avant qu'elle ne change avec le keyup
+    e.target.defaultValue = e.target.value;
+}
+
+// ======================================
+// Function : JTGH_WPHGP_maj_bloc_couleur
+// ======================================
+const JTGH_WPHGP_maj_bloc_couleur = (e) => {
+
+    // Récupération des infos qui nous intéressent
+    const cat_id = e.target.alt;
+    const previous_val = e.target.defaultValue;
+    const next_val = e.target.value;
+
+    // Ciblage des éléments qui nous intéresse ici
+    const target_input = document.getElementById("JTGH_WPHGP_hex_code_" + cat_id);
+    const target_color = document.getElementById("JTGH_WPHGP_color_bloc_" + cat_id);
+
+    // Regex de vérification des couleurs hexadécimales
+    const reg_hexa_color = /^[0-9A-Fa-f]{0,8}$/g;
+
+    // Sortie si couleur non conforme
+    if(!reg_hexa_color.test(next_val)) {
+        target_input.value = previous_val;
+        target_color.style.backgroundColor = "#" + previous_val;
+        return;
+    }
+
+    // Mise à jour de la couleur, dans le bloc correspondant
+    target_color.style.backgroundColor = "#" + next_val;
+
+}

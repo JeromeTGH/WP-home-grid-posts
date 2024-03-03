@@ -20,6 +20,7 @@
         JTGH_write_option('activation_date', time());
         JTGH_write_option('shortcode_name', JTGH_WPHGP_SHORTCODE_NAME);
         JTGH_write_option('categories_a_afficher', '[]');
+        JTGH_write_option('couleurs_des_categories', '[]');
 
     }
 

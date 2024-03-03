@@ -9,7 +9,6 @@
 
     // Récupération des canaux qui nous seront utiles ici
     global $wpdb;
-    $_GET = stripslashes_deep($_GET);
     $_POST = stripslashes_deep($_POST);
 
     // Tableau qui contiendra les éventuelles catégories sélectionnées
@@ -124,7 +123,7 @@
         <div class="JTGH_WPHGP_notice_success">Mise à jour effectuée avec succès !</div> <?php
     }
 ?>
-<form method="post" action="admin.php?page=<?php echo JTGH_WPHGP_PREFIX.'page_categories'; ?>&action=updateCat">
+<form method="post" action="admin.php?page=<?php echo JTGH_WPHGP_PREFIX.'page_categories'; ?>">
     <?php
         wp_nonce_field(JTGH_WPHGP_PREFIX.'updateCat');
     ?>

@@ -24,7 +24,7 @@
         $submenu_title = 'Accueil';
         $submenu_slug = $main_slug;
         $callback = JTGH_WPHGP_PREFIX.'page_accueil';
-            $page_title = $menu_title.' - '.JTGH_WPHGP_PAGE_TITLE;
+            $page_title = $submenu_title.' - '.JTGH_WPHGP_PAGE_TITLE;
             $capability = 'manage_options';
             add_submenu_page($parent_slug, $page_title, $submenu_title, $capability, $submenu_slug, $callback);
 
@@ -33,10 +33,19 @@
         $submenu_title = 'Categories';
         $submenu_slug = JTGH_WPHGP_PREFIX.'page_categories';
         $callback = JTGH_WPHGP_PREFIX.'page_categories';
-            $page_title = $menu_title.' - '.JTGH_WPHGP_PAGE_TITLE;
+            $page_title = $submenu_title.' - '.JTGH_WPHGP_PAGE_TITLE;
             $capability = 'manage_options';
         add_submenu_page($parent_slug, $page_title, $submenu_title, $capability, $submenu_slug, $callback);
 
+        // Sous-menu #3
+        $parent_slug = $main_slug;
+        $submenu_title = 'Couleurs';
+        $submenu_slug = JTGH_WPHGP_PREFIX.'page_couleurs';
+        $callback = JTGH_WPHGP_PREFIX.'page_couleurs';
+            $page_title = $submenu_title.' - '.JTGH_WPHGP_PAGE_TITLE;
+            $capability = 'manage_options';
+        add_submenu_page($parent_slug, $page_title, $submenu_title, $capability, $submenu_slug, $callback);
+        
     }
 
 ?>

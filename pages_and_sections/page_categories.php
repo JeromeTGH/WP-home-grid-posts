@@ -15,8 +15,24 @@
     // Tableau qui contiendra les éventuelles catégories sélectionnées
     $tblSelectedCategories = array();
 
-    // Drapeau de mise à jour
+    // Drapeaux des messages à afficher, accessoirement
     $maj_effectuee = false;
+    $modifs_annulees = false;
+
+    // Traitement des données postées, le cas échéant
+    if(isset($_POST) && isset($_POST['btnCancelCatModifications'])) {
+
+        // Vérification NONCE
+        if(!isset($_REQUEST['_wpnonce']) || !wp_verify_nonce($_REQUEST['_wpnonce'], JTGH_WPHGP_PREFIX.'updateCat')) {
+            wp_nonce_ays(JTGH_WPHGP_PREFIX.'page_categories');
+            exit;
+        }
+
+        // Levée du drapeau correspondant
+        $modifs_annulees = true;
+        
+    }
+
 
     // Traitement des données postées, le cas échéant
     if(isset($_POST) && isset($_POST['btnUpdateCategories'])) {
@@ -96,8 +112,12 @@
             $src_tbl[] = $object;
         }
     }
-
     
+?>
+<?php
+    if($modifs_annulees) {?>
+        <div class="JTGH_WPHGP_notice_warning">Modifications non enregistrées annulées !</div> <?php
+    }
 ?>
 <?php
     if($maj_effectuee) {?>
@@ -140,7 +160,7 @@
     <br>
     <input type="hidden" value="<?php echo json_encode($tblSelectedCategories); ?>" name="JTGH_WPHGP_categories_choisies" id="JTGH_WPHGP_categories_choisies" />
     <div class="JTGH_WPHGP_categories_bottom_btns">
-        <button class="JTGH_WPHGP_cat_btn_bascul" type="button" onClick="window.location.reload();">Annuler les modifications non enregistrées</button>
+        <button class="JTGH_WPHGP_cat_btn_bascul" type="submit" name="btnCancelCatModifications">Annuler les modifications non enregistrées</button>
         <button class="JTGH_WPHGP_cat_btn_bascul" type="button" onclick="JTGH_WPHGP_unselect_all_cat()">Tout désélectionner dans les listes</button>
         <button class="JTGH_WPHGP_cat_btn_bascul" type="submit" name="btnUpdateCategories">Enregistrer toutes les modifications</button>
     </div>

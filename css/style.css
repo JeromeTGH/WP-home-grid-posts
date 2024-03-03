@@ -30,6 +30,16 @@
     margin-right: 1rem;
 }
 
+.JTGH_WPHGP_notice_warning {
+    color: #B08000;
+    background-color: #FFF0D0;
+    border: 1px solid #F0E0C0;
+    border-radius: 4px;
+    font-weight: 600;
+    padding: 0.6rem;
+    margin-right: 1rem;
+}
+
 .JTGH_WPHGP_center_div_column {
     display: flex;
     flex-direction: column;

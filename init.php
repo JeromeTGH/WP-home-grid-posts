@@ -8,6 +8,7 @@
 	define('JTGH_WPHGP_PREFIX', 'JTGH_WPHGP_');
 	define('JTGH_WPHGP_PAGE_TITLE', 'WP Home Grid Posts');
 	define('JTGH_WPHGP_SHORTCODE_NAME', 'JTGH_WPHGP');
+	define('JTGH_WPHGP_DEFAULT_CATEGORY_COLOR', '555555');
 
 	// Mise en mémoire tampon des données qui suivront (hormis headers)
 	ob_start();

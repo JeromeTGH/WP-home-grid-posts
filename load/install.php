@@ -20,6 +20,7 @@
         $liste_de_couleurs = array();
         $all_categories_color = new stdClass();
         $all_categories_color->cat_id = 0;
+        $all_categories_color->name = 'Tout';
         $all_categories_color->couleur = JTGH_WPHGP_DEFAULT_CATEGORY_COLOR;
         $all_categories_color->affichage = true;
         $liste_de_couleurs[] = $all_categories_color;

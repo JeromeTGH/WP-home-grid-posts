@@ -278,3 +278,10 @@ const JTGH_WPHGP_maj_bloc_couleur = (e) => {
     target_color.style.backgroundColor = "#" + next_val;
 
 }
+
+// =================================
+// Function : JTGH_WPHGP_confirm_btn
+// =================================
+const JTGH_WPHGP_confirm_btn = () => {
+    return confirm("Êtes-vous sûr de vouloir importer ces données ?");
+}

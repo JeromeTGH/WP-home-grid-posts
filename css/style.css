@@ -162,3 +162,16 @@
     padding: 0.4rem;
     font-size: 1.2rem;
 }
+
+.JTGH_WPHGP_import_export_layout {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+.JTGH_WPHGP_import_textarea {
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    width: 98%;
+    resize: none;
+}

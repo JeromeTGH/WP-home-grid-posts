@@ -17,10 +17,10 @@
     $modifs_annulees = false;
 
     // Paramètres à afficher
-    $nbre_d_articles_par_page = '';
-    $nbre_de_colonnes_d_affichage = '';
+    $nbre_d_articles_par_page = 0;
+    $nbre_de_colonnes_d_affichage = 0;
     $afficher_metadonnees = false;
-    $longueur_maxi_extract = '';
+    $longueur_maxi_extract = 0;
 
     // Traitement des données postées, le cas échéant
     if(isset($_POST) && isset($_POST['btnCancelParamsModifications'])) {
@@ -59,10 +59,19 @@
             $echec_de_maj = true;
         }
 
-
-
-
-
+        // Vérification du format des données
+        if (!is_numeric($_POST['JTGH_WPHGP_param_nb_articles_par_page'])) {
+            ?><div class="JTGH_WPHGP_notice_alert">Valeur "JTGH_WPHGP_param_nb_articles_par_page" non numérique...</div><?php
+            $echec_de_maj = true;
+        }
+        if (!is_numeric($_POST['JTGH_WPHGP_param_nb_colonnes_a_afficher'])) {
+            ?><div class="JTGH_WPHGP_notice_alert">Valeur "JTGH_WPHGP_param_nb_colonnes_a_afficher" non numérique...</div><?php
+            $echec_de_maj = true;
+        }
+        if (!is_numeric($_POST['JTGH_WPHGP_param_nb_cars_max_extract'])) {
+            ?><div class="JTGH_WPHGP_notice_alert">Valeur "JTGH_WPHGP_param_nb_cars_max_extract" non numérique...</div><?php
+            $echec_de_maj = true;
+        }
 
         // Traitement des données
         if(isset($_POST['JTGH_WPHGP_param_afficher_metadonnees'])) {
@@ -70,25 +79,16 @@
         } else {
             $afficher_metadonnees = false;
         }
-
-
-
+        $nbre_d_articles_par_page = $_POST['JTGH_WPHGP_param_nb_articles_par_page'];
+        $nbre_de_colonnes_d_affichage = $_POST['JTGH_WPHGP_param_nb_colonnes_a_afficher'];
+        $longueur_maxi_extract = $_POST['JTGH_WPHGP_param_nb_cars_max_extract'];
 
         // Enregistrement des nouvelles données
+        JTGH_write_option('nbre_d_articles_par_page', $nbre_d_articles_par_page);
+        JTGH_write_option('nbre_de_colonnes_d_affichage', $nbre_de_colonnes_d_affichage);
         JTGH_write_option('afficher_metadonnees', $afficher_metadonnees);
+        JTGH_write_option('longueur_maxi_extract', $longueur_maxi_extract);
         $maj_effectuee = true;
-
-
-
-        print_r($_POST);
-        echo '<br><br>';
-
-
-
-
-
-
-
 
     }
     

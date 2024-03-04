@@ -31,4 +31,13 @@
         require(JTGH_WPHGP_ROOT_DIRECTORY.'/pages_and_sections/footer.php');
     }
 
+    // =================
+    // Page : PARAMÈTRES
+    // =================
+    function JTGH_WPHGP_page_parametres() {
+        require(JTGH_WPHGP_ROOT_DIRECTORY.'/pages_and_sections/header.php');
+        require(JTGH_WPHGP_ROOT_DIRECTORY.'/pages_and_sections/page_parametres.php');
+        require(JTGH_WPHGP_ROOT_DIRECTORY.'/pages_and_sections/footer.php');
+    }
+
 ?>

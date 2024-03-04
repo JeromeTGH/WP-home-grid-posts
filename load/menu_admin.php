@@ -45,6 +45,15 @@
             $page_title = $submenu_title.' - '.JTGH_WPHGP_PAGE_TITLE;
             $capability = 'manage_options';
         add_submenu_page($parent_slug, $page_title, $submenu_title, $capability, $submenu_slug, $callback);
+
+        // Sous-menu #4
+        $parent_slug = $main_slug;
+        $submenu_title = 'Paramètres';
+        $submenu_slug = JTGH_WPHGP_PREFIX.'page_parametres';
+        $callback = JTGH_WPHGP_PREFIX.'page_parametres';
+            $page_title = $submenu_title.' - '.JTGH_WPHGP_PAGE_TITLE;
+            $capability = 'manage_options';
+        add_submenu_page($parent_slug, $page_title, $submenu_title, $capability, $submenu_slug, $callback);
         
     }
 

@@ -11,18 +11,94 @@
     global $wpdb;
     $_POST = stripslashes_deep($_POST);
 
+    // Drapeaux des messages à afficher, accessoirement
+    $maj_effectuee = false;
+    $echec_de_maj = false;
+    $modifs_annulees = false;
+
     // Paramètres à afficher
     $nbre_d_articles_par_page = '';
     $nbre_de_colonnes_d_affichage = '';
     $afficher_metadonnees = false;
     $longueur_maxi_extract = '';
+
+    // Traitement des données postées, le cas échéant
+    if(isset($_POST) && isset($_POST['btnCancelParamsModifications'])) {
+
+        // Vérification NONCE
+        if(!isset($_REQUEST['_wpnonce']) || !wp_verify_nonce($_REQUEST['_wpnonce'], JTGH_WPHGP_PREFIX.'updateParameters')) {
+            wp_nonce_ays(JTGH_WPHGP_PREFIX.'page_parametres');
+            exit;
+        }
+
+        // Levée du drapeau correspondant
+        $modifs_annulees = true;
+        
+    }
+
+    // Traitement des données postées, le cas échéant
+    if(isset($_POST) && isset($_POST['btnUpdateParams'])) {
+
+        // Vérification NONCE
+        if(!isset($_REQUEST['_wpnonce']) || !wp_verify_nonce($_REQUEST['_wpnonce'], JTGH_WPHGP_PREFIX.'updateParameters')) {
+            wp_nonce_ays(JTGH_WPHGP_PREFIX.'page_parametres');
+            exit;
+        }
+
+        // Vérification de la présence des données attendues (input text, hors checkbox)
+        if(!isset($_POST['JTGH_WPHGP_param_nb_articles_par_page'])) {
+            ?><div class="JTGH_WPHGP_notice_alert">Valeur "JTGH_WPHGP_param_nb_articles_par_page" manquante...</div><?php
+            $echec_de_maj = true;
+        }
+        if(!isset($_POST['JTGH_WPHGP_param_nb_colonnes_a_afficher'])) {
+            ?><div class="JTGH_WPHGP_notice_alert">Valeur "JTGH_WPHGP_param_nb_colonnes_a_afficher" manquante...</div><?php
+            $echec_de_maj = true;
+        }
+        if(!isset($_POST['JTGH_WPHGP_param_nb_cars_max_extract'])) {
+            ?><div class="JTGH_WPHGP_notice_alert">Valeur "JTGH_WPHGP_param_nb_cars_max_extract" manquante...</div><?php
+            $echec_de_maj = true;
+        }
+
+
+
+
+
+
+        // Traitement des données
+        if(isset($_POST['JTGH_WPHGP_param_afficher_metadonnees'])) {
+            $afficher_metadonnees = true;
+        } else {
+            $afficher_metadonnees = false;
+        }
+
+
+
+
+        // Enregistrement des nouvelles données
+        JTGH_write_option('afficher_metadonnees', $afficher_metadonnees);
+        $maj_effectuee = true;
+
+
+
+        print_r($_POST);
+        echo '<br><br>';
+
+
+
+
+
+
+
+
+    }
     
 ?>
 <?php
-    // Drapeaux des messages à afficher, accessoirement
-    $maj_effectuee = false;
-    $echec_de_maj = false;
-    $modifs_annulees = false;
+    // Chargement des options
+    $nbre_d_articles_par_page = JTGH_read_option('nbre_d_articles_par_page');
+    $nbre_de_colonnes_d_affichage = JTGH_read_option('nbre_de_colonnes_d_affichage');
+    $afficher_metadonnees = JTGH_read_option('afficher_metadonnees');
+    $longueur_maxi_extract = JTGH_read_option('longueur_maxi_extract');
 ?>
 <?php
     if($modifs_annulees) {?>

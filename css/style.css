@@ -144,10 +144,21 @@
     width: 4rem;
 }
 
-.JTGH_WPHGP_colors_bottom_btns {
+.JTGH_WPHGP_colors_bottom_btns, .JTGH_WPHGP_params_bottom_btns {
     display: grid;
     grid-template-columns: 1fr 1fr;
     column-gap: 2%;
     margin: 0 10%;
     width: 80%;
+}
+
+.JTGH_WPHGP_params_layout {
+    padding: 2rem 4rem; 
+}
+.JTGH_WPHGP_params_table {
+    margin-bottom: 2rem;
+}
+.JTGH_WPHGP_params_table th, .JTGH_WPHGP_params_table td {
+    padding: 0.4rem;
+    font-size: 1.2rem;
 }

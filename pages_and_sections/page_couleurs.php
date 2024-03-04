@@ -208,7 +208,6 @@
         <div class="JTGH_WPHGP_notice_alert">Echec de la mise à jour...</div> <?php
     }
 ?>
-
 <form method="post" action="admin.php?page=<?php echo JTGH_WPHGP_PREFIX.'page_couleurs'; ?>">
     <div class="JTGH_WPHGP_colors_layout">
         <?php
@@ -221,7 +220,7 @@
                     <th>Catégorie</th>
                     <th>Code HEXA</th>
                     <th>Aperçu couleur</th>
-                <tr>
+                </tr>
             </thead>
             <tbody>
                 <?php
@@ -240,7 +239,7 @@
                         alt="<?php echo $tableau_des_couleurs_de_categories_a_afficher[$idx_ligne]->cat_id; ?>"
                     /></td>
                     <td><span id="JTGH_WPHGP_color_bloc_<?php echo $tableau_des_couleurs_de_categories_a_afficher[$idx_ligne]->cat_id; ?>" class="JTGH_WPHGP_bloc_apercu_couleur" style="background: #<?php echo $tableau_des_couleurs_de_categories_a_afficher[$idx_ligne]->couleur; ?>">&nbsp;</span></td>
-                <tr>
+                </tr>
                 <?php
                     }
                 ?> 

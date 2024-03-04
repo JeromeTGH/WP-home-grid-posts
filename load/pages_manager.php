@@ -40,4 +40,13 @@
         require(JTGH_WPHGP_ROOT_DIRECTORY.'/pages_and_sections/footer.php');
     }
 
+    // ====================
+    // Page : IMPORT/EXPORT
+    // ====================
+    function JTGH_WPHGP_page_import_export() {
+        require(JTGH_WPHGP_ROOT_DIRECTORY.'/pages_and_sections/header.php');
+        require(JTGH_WPHGP_ROOT_DIRECTORY.'/pages_and_sections/page_import_export.php');
+        require(JTGH_WPHGP_ROOT_DIRECTORY.'/pages_and_sections/footer.php');
+    }
+
 ?>

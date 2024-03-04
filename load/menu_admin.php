@@ -54,6 +54,15 @@
             $page_title = $submenu_title.' - '.JTGH_WPHGP_PAGE_TITLE;
             $capability = 'manage_options';
         add_submenu_page($parent_slug, $page_title, $submenu_title, $capability, $submenu_slug, $callback);
+
+        // Sous-menu #5
+        $parent_slug = $main_slug;
+        $submenu_title = 'Import/Export';
+        $submenu_slug = JTGH_WPHGP_PREFIX.'page_import_export';
+        $callback = JTGH_WPHGP_PREFIX.'page_import_export';
+            $page_title = $submenu_title.' - '.JTGH_WPHGP_PAGE_TITLE;
+            $capability = 'manage_options';
+        add_submenu_page($parent_slug, $page_title, $submenu_title, $capability, $submenu_slug, $callback); 
         
     }
 

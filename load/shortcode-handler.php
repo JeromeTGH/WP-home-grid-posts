@@ -36,18 +36,30 @@
         }
         usort($tblCouleursDesCategories, "JTGH_WPHGP_tri_tableau_couleurs_selon_index");
 
-
         // Génération des catégories en entête
-        $code_html_a_retourner .= '<div class="JTGH_WPHGP_entete_categories">';
         $code_html_a_retourner .= '<ul class="JTGH_WPHGP_cat_container">';
         foreach($tblCouleursDesCategories as $infos_categorie) {
             if($infos_categorie->affichage) {
-                $couleur_bordure = JTGH_WPHGP_modifier_luminosite($infos_categorie->couleur, -20);
-                $couleur_fond = JTGH_WPHGP_modifier_luminosite($infos_categorie->couleur, 0);
-                $code_html_a_retourner .= '<li style="background: #'.$couleur_fond.'; border-color: #'.$couleur_bordure.';">'.$infos_categorie->name.'</li>';
+                $couleur = $infos_categorie->couleur;
+                $code_html_a_retourner .= '<li style="border-left: 1rem solid #'.$couleur.';" onclick="JTGH_WPHGP_handleCategoryChange('.$infos_categorie->cat_id.')">'.$infos_categorie->name.'</li>';
             }
         }
         $code_html_a_retourner .= '</ul>';
+
+
+
+
+
+
+        
+
+
+
+
+
+
+        // Génération des tabs
+        $code_html_a_retourner .= '<div>';
         $code_html_a_retourner .= '</div>';
 
 
@@ -61,7 +73,7 @@
         // print_r($tblCouleursDesCategories);
         // echo '<br><br>';
         
-        // À développer par la suite
+        // Retour HTML du shortcode
         return $code_html_a_retourner;
 
     }

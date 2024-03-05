@@ -49,27 +49,21 @@
         }
     }
     
-    // S'il y a des catégories dont on n'a pas déjà enregistré le nom, alors on les récupère
-    if($nom_de_categorie_manquant) {
+    // On rafraîchit ou ajoute les noms de catégories manquantes
+    $rqt_listing_categories = "SELECT T.term_id, T.name
+    FROM `wp_terms` AS T
+    LEFT JOIN `wp_term_taxonomy` AS X ON T.term_id = X.term_id
+    WHERE X.taxonomy = 'category'
+    ORDER BY T.name ASC";
+    $resultat_listing_categories = $wpdb->get_results($rqt_listing_categories);
 
-        // Requête pour lister les catégories en BDD
-        $rqt_listing_categories = "SELECT T.term_id, T.name
-        FROM `wp_terms` AS T
-        LEFT JOIN `wp_term_taxonomy` AS X ON T.term_id = X.term_id
-        WHERE X.taxonomy = 'category'
-        ORDER BY T.name ASC";
-        $resultat_listing_categories = $wpdb->get_results($rqt_listing_categories);
-    
-        // Renseignement des noms
-        for($i=0 ; $i < count($tblCouleursDesCategories); $i++) {
-            if($tblCouleursDesCategories[$i]->name == '') {
-                $modif_sur_liste_de_couleurs = true;
+    // Renseignement des noms
+    for($i=0 ; $i < count($tblCouleursDesCategories); $i++) {
+        $modif_sur_liste_de_couleurs = true;
 
-                foreach($resultat_listing_categories as $row) {
-                    if($row->term_id == $tblCouleursDesCategories[$i]->cat_id) {
-                        $tblCouleursDesCategories[$i]->name = $row->name;
-                    }
-                }
+        foreach($resultat_listing_categories as $row) {
+            if($row->term_id == $tblCouleursDesCategories[$i]->cat_id) {
+                $tblCouleursDesCategories[$i]->name = $row->name;
             }
         }
     }

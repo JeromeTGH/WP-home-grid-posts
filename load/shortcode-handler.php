@@ -51,7 +51,7 @@
 
 
         // Requête pour lister les article d'une catégorie donnée
-        $rqt_recup_articles_par_categorie = "SELECT P.ID, P.post_title, PM.meta_value
+        $rqt_recup_articles_par_categorie = "SELECT P.ID, P.post_title, P.post_content, PM.meta_value
         FROM `wp_posts` AS P
         LEFT JOIN `wp_term_relationships` AS RS ON RS.object_id = P.ID
         LEFT JOIN `wp_term_taxonomy` AS TT ON TT.term_taxonomy_id = RS.term_taxonomy_id
@@ -75,8 +75,7 @@
         // echo '<br><br>';
         // print_r($resultat_recupere_lien_image_article);
         // echo '<br><br>';
-
-
+        
 
 
         // Génération des tabs
@@ -85,9 +84,9 @@
         for($repetition=0; $repetition < 12; $repetition++) {
             $code_html_a_retourner .= '<div class="JTGH_WPHGP_category_post_container">';
             $code_html_a_retourner .= '<img src="'.$resultat_recupere_lien_image_article[0]->guid.'" alt="'.$resultat_recupere_lien_image_article[0]->post_content.'" />';
-            $code_html_a_retourner .= '<div class="JTGH_WPHGP_category_post_title">Titre de l\'article</div>';
-            $code_html_a_retourner .= '<div class="JTGH_WPHGP_category_post_extract">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Mollitia ea quidem illum nihil ullam? Quasi, eligendi aspernatur consequuntur aperiam ipsam cupiditate odio fuga itaque praesentium autem, ea accusantium perferendis ratione?</div>';
-            $code_html_a_retourner .= '<div class="JTGH_WPHGP_category_post_link"><a>Lire plus...</a></div>';
+            $code_html_a_retourner .= '<div class="JTGH_WPHGP_category_post_title">'.$resultat_recup_articles_par_categorie[0]->post_title.'</div>';
+            $code_html_a_retourner .= '<div class="JTGH_WPHGP_category_post_extract">'.JTGH_WPHGP_post_extract($resultat_recup_articles_par_categorie[0]->post_content, 35).'</div>';
+            $code_html_a_retourner .= '<div class="JTGH_WPHGP_category_post_link"><a href="'.get_permalink($resultat_recup_articles_par_categorie[0]->ID).'?pseSrc=home">Lire plus...</a></div>';
             $code_html_a_retourner .= '</div>';
         }
         $code_html_a_retourner .= '</div>';

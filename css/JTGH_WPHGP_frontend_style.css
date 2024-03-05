@@ -42,6 +42,7 @@
     border: 1px solid #777777;
     border-radius: 20px;
     overflow: hidden;
+    height: 100%;
 }
 .JTGH_WPHGP_category_post_container img {
     object-fit: contain;

@@ -70,4 +70,19 @@
         
         return $rouge_hex.$vert_hex.$bleu_hex;
     }
+
+
+    // ==================================
+    // Fonction : JTGH_WPHGP_post_extract
+    // ==================================
+    function JTGH_WPHGP_post_extract($texte, $longueur)
+    {
+        $texte = strip_shortcodes($texte);
+        $texte = apply_filters('the_content', $texte);
+        $texte = str_replace(']]>', ']]&gt;', $texte);
+
+        $extract = wp_trim_words($texte, $longueur, ' [&hellip;]');
+        return $extract;
+    }
+
 ?>

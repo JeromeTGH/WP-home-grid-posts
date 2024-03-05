@@ -33,6 +33,7 @@
             $new_categories_color->name = '';
             $new_categories_color->couleur = JTGH_WPHGP_DEFAULT_CATEGORY_COLOR;
             $new_categories_color->affichage = true;
+            $new_categories_color->index = 9999;
             $tblCouleursDesCategories[] = $new_categories_color;
         }
     }
@@ -67,12 +68,22 @@
             }
         }
     }
+
+    // On ajoute des index aux catégories colorées
+    for($i=0 ; $i < count($tblCategoriesChoisies); $i++) {
+        // $tblCouleursDesCategories[$j]->index = 0;
+        for($j=0 ; $j < count($tblCouleursDesCategories); $j++) {
+            if($tblCouleursDesCategories[$j]->cat_id == $tblCategoriesChoisies[$i]) {
+                $tblCouleursDesCategories[$j]->index = $i+1;
+            }
+        }
+    }
     
     // Si la liste des couleurs de catégories a été modifiée, alors on enregistre les changements, et on la recharge
-    if($modif_sur_liste_de_couleurs) {
+    // if($modif_sur_liste_de_couleurs) {
         JTGH_write_option('couleurs_des_categories', json_encode($tblCouleursDesCategories));
         $tblCouleursDesCategories = json_decode(JTGH_read_option('couleurs_des_categories'));
-    }
+    // }
 
 ?>
 <?php

@@ -23,6 +23,7 @@
         $all_categories_color->name = 'Tout';
         $all_categories_color->couleur = JTGH_WPHGP_DEFAULT_CATEGORY_COLOR;
         $all_categories_color->affichage = true;
+        $all_categories_color->index = 0;
         $liste_de_couleurs[] = $all_categories_color;
     
         // Création/enregistrement des options

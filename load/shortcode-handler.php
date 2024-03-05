@@ -47,59 +47,93 @@
         $code_html_a_retourner .= '</ul>';
 
 
-
-
-
-        // Requête pour lister les article d'une catégorie donnée
-        $rqt_recup_articles_par_categorie = "SELECT P.ID, P.post_title, P.post_content, PM.meta_value
-        FROM `wp_posts` AS P
-        LEFT JOIN `wp_term_relationships` AS RS ON RS.object_id = P.ID
-        LEFT JOIN `wp_term_taxonomy` AS TT ON TT.term_taxonomy_id = RS.term_taxonomy_id
-        LEFT JOIN `wp_terms` AS T ON T.term_id = TT.term_id
-        LEFT JOIN `wp_postmeta` AS PM ON PM.post_id = P.ID
-        WHERE P.post_type = 'post'
-        AND P.post_status = 'publish'
-        AND T.term_id = 5
-        AND PM.meta_key = '_thumbnail_id'
-        ORDER BY P.post_date_gmt DESC";
-        $resultat_recup_articles_par_categorie = $wpdb->get_results($rqt_recup_articles_par_categorie);
-
-        // Requête pour récupérer l'url de l'image de l'article correspondant
-        $rqt_recupere_lien_image_article = "SELECT P.guid, P.post_content
-        FROM `wp_posts` AS P
-        WHERE P.ID = ".$resultat_recup_articles_par_categorie[0]->meta_value;
-        $resultat_recupere_lien_image_article = $wpdb->get_results($rqt_recupere_lien_image_article);
-
-
-        // print_r($resultat_recup_articles_par_categorie);
-        // echo '<br><br>';
-        // print_r($resultat_recupere_lien_image_article);
-        // echo '<br><br>';
+        // Récupération de certains paramètres du plugin
+        $nombre_de_mots_a_afficher_au_maximum = 35;
+        $nombre_d_articles_a_afficher = 12;
         
-
 
         // Génération des tabs
         $code_html_a_retourner .= '<div class="JTGH_WPHGP_all_posts_container">';
-        $code_html_a_retourner .= '<div class="JTGH_WPHGP_category_posts_container">';
-        for($repetition=0; $repetition < 12; $repetition++) {
-            $code_html_a_retourner .= '<div class="JTGH_WPHGP_category_post_container">';
-            $code_html_a_retourner .= '<img src="'.$resultat_recupere_lien_image_article[0]->guid.'" alt="'.$resultat_recupere_lien_image_article[0]->post_content.'" />';
-            $code_html_a_retourner .= '<div class="JTGH_WPHGP_category_post_title">'.$resultat_recup_articles_par_categorie[0]->post_title.'</div>';
-            $code_html_a_retourner .= '<div class="JTGH_WPHGP_category_post_extract">'.JTGH_WPHGP_post_extract($resultat_recup_articles_par_categorie[0]->post_content, 35).'</div>';
-            $code_html_a_retourner .= '<div class="JTGH_WPHGP_category_post_link"><a href="'.get_permalink($resultat_recup_articles_par_categorie[0]->ID).'?pseSrc=home">Lire plus...</a></div>';
-            $code_html_a_retourner .= '</div>';
-        }
+
+            // Catégorie "0" (tout, en fait)
+            $code_html_a_retourner .= JTGH_WPHGP_get_category_bloc_content(0, $nombre_d_articles_a_afficher);
+
+            // Autres catégories (scan $tblCategoriesChoisies)
+            foreach($tblCategoriesChoisies as $categoriesChoisie) {
+                $code_html_a_retourner .= JTGH_WPHGP_get_category_bloc_content($categoriesChoisie, $nombre_d_articles_a_afficher);
+            }
+
         $code_html_a_retourner .= '</div>';
-        $code_html_a_retourner .= '</div>';
-
-
-
-
-
 
         // Retour HTML du shortcode
         return $code_html_a_retourner;
 
+    }
+
+
+    // Fonction permettant la génération du bloc de contenu, pour une catégorie donnée (ou pas de catégorie, si cat_id=0)
+    function JTGH_WPHGP_get_category_bloc_content($cat_id, $nombre_d_articles_a_afficher) {
+
+        global $wpdb;
+
+        // Initialise la variable de retour
+        $code_html_a_retourner = '';
+
+        // Requête pour lister tous les articles d'une catégorie donnée (ou de tout l'ensemble, le cas échéant)
+        if($cat_id == 0) {
+            $rqt_recup_articles_par_categorie = "SELECT P.ID, P.post_title, P.post_content, PM.meta_value
+            FROM `wp_posts` AS P
+            LEFT JOIN `wp_term_relationships` AS RS ON RS.object_id = P.ID
+            LEFT JOIN `wp_term_taxonomy` AS TT ON TT.term_taxonomy_id = RS.term_taxonomy_id
+            LEFT JOIN `wp_terms` AS T ON T.term_id = TT.term_id
+            LEFT JOIN `wp_postmeta` AS PM ON PM.post_id = P.ID
+            WHERE P.post_type = 'post'
+            AND P.post_status = 'publish'
+            AND PM.meta_key = '_thumbnail_id'
+            ORDER BY P.post_date_gmt DESC
+            LIMIT $nombre_d_articles_a_afficher";
+        } else {
+            $rqt_recup_articles_par_categorie = "SELECT P.ID, P.post_title, P.post_content, PM.meta_value
+            FROM `wp_posts` AS P
+            LEFT JOIN `wp_term_relationships` AS RS ON RS.object_id = P.ID
+            LEFT JOIN `wp_term_taxonomy` AS TT ON TT.term_taxonomy_id = RS.term_taxonomy_id
+            LEFT JOIN `wp_terms` AS T ON T.term_id = TT.term_id
+            LEFT JOIN `wp_postmeta` AS PM ON PM.post_id = P.ID
+            WHERE P.post_type = 'post'
+            AND P.post_status = 'publish'
+            AND T.term_id = $cat_id
+            AND PM.meta_key = '_thumbnail_id'
+            ORDER BY P.post_date_gmt DESC
+            LIMIT $nombre_d_articles_a_afficher";
+        }
+        $resultat_recup_articles_par_categorie = $wpdb->get_results($rqt_recup_articles_par_categorie);
+
+        // Génère les données appropriées, complètes
+        if($cat_id == 0) {
+            $code_html_a_retourner .= '<div id="JTGH_WPHGP_category_number_'.$cat_id.'" class="JTGH_WPHGP_category_posts_container">';
+        } else {
+            $code_html_a_retourner .= '<div style="display: none;" id="JTGH_WPHGP_category_number_'.$cat_id.'" class="JTGH_WPHGP_category_posts_container">';
+        }
+            for($i=0 ; $i < count($resultat_recup_articles_par_categorie); $i++) {
+                // Requête pour récupérer l'url de l'image de l'article correspondant
+                $rqt_recupere_lien_image_article = "SELECT P.guid, P.post_content
+                FROM `wp_posts` AS P
+                WHERE P.ID = ".$resultat_recup_articles_par_categorie[$i]->meta_value;
+                $resultat_recupere_lien_image_article = $wpdb->get_results($rqt_recupere_lien_image_article);
+
+                // Génère les données
+                $resultat_recupere_lien_image_article = $wpdb->get_results($rqt_recupere_lien_image_article);
+                $code_html_a_retourner .= '<div class="JTGH_WPHGP_category_post_container">';
+                    $code_html_a_retourner .= '<img src="'.$resultat_recupere_lien_image_article[0]->guid.'" alt="'.$resultat_recupere_lien_image_article[0]->post_content.'" />';
+                    $code_html_a_retourner .= '<div class="JTGH_WPHGP_category_post_title">'.$resultat_recup_articles_par_categorie[$i]->post_title.'</div>';
+                    $code_html_a_retourner .= '<div class="JTGH_WPHGP_category_post_extract">'.JTGH_WPHGP_post_extract($resultat_recup_articles_par_categorie[$i]->post_content, 35).'</div>';
+                    $code_html_a_retourner .= '<div class="JTGH_WPHGP_category_post_link"><a href="'.get_permalink($resultat_recup_articles_par_categorie[$i]->ID).'?pseSrc=home">Lire plus...</a></div>';
+                $code_html_a_retourner .= '</div>';
+            }
+        $code_html_a_retourner .= '</div>';
+
+        // Retourne les données
+        return $code_html_a_retourner;
     }
 
 ?>

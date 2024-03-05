@@ -48,9 +48,9 @@
 
 
 
-        
 
-        // Requête pour lister les catégories
+
+        // Requête pour lister les article d'une catégorie donnée
         $rqt_recup_articles_par_categorie = "SELECT P.ID, P.post_title, PM.meta_value
         FROM `wp_posts` AS P
         LEFT JOIN `wp_term_relationships` AS RS ON RS.object_id = P.ID
@@ -64,6 +64,7 @@
         ORDER BY P.post_date_gmt DESC";
         $resultat_recup_articles_par_categorie = $wpdb->get_results($rqt_recup_articles_par_categorie);
 
+        // Requête pour récupérer l'url de l'image de l'article correspondant
         $rqt_recupere_lien_image_article = "SELECT P.guid, P.post_content
         FROM `wp_posts` AS P
         WHERE P.ID = ".$resultat_recup_articles_par_categorie[0]->meta_value;
@@ -78,16 +79,17 @@
 
 
 
-
         // Génération des tabs
         $code_html_a_retourner .= '<div class="JTGH_WPHGP_all_posts_container">';
         $code_html_a_retourner .= '<div class="JTGH_WPHGP_category_posts_container">';
-        $code_html_a_retourner .= '<div class="JTGH_WPHGP_category_post_container">';
-        $code_html_a_retourner .= '<img src="'.$resultat_recupere_lien_image_article[0]->guid.'" alt="'.$resultat_recupere_lien_image_article[0]->post_content.'" />';
-        $code_html_a_retourner .= '<div>Titre</div>';
-        $code_html_a_retourner .= '<div>Texte</div>';
-        $code_html_a_retourner .= '<div>Lire plus...</div>';
-        $code_html_a_retourner .= '</div>';
+        for($repetition=0; $repetition < 12; $repetition++) {
+            $code_html_a_retourner .= '<div class="JTGH_WPHGP_category_post_container">';
+            $code_html_a_retourner .= '<img src="'.$resultat_recupere_lien_image_article[0]->guid.'" alt="'.$resultat_recupere_lien_image_article[0]->post_content.'" />';
+            $code_html_a_retourner .= '<div class="JTGH_WPHGP_category_post_title">Titre de l\'article</div>';
+            $code_html_a_retourner .= '<div class="JTGH_WPHGP_category_post_extract">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Mollitia ea quidem illum nihil ullam? Quasi, eligendi aspernatur consequuntur aperiam ipsam cupiditate odio fuga itaque praesentium autem, ea accusantium perferendis ratione?</div>';
+            $code_html_a_retourner .= '<div class="JTGH_WPHGP_category_post_link"><a>Lire plus...</a></div>';
+            $code_html_a_retourner .= '</div>';
+        }
         $code_html_a_retourner .= '</div>';
         $code_html_a_retourner .= '</div>';
 

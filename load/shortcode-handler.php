@@ -22,29 +22,44 @@
         $tblCategoriesChoisies = json_decode(JTGH_read_option('categories_a_afficher'));
         $tblCouleursDesCategories = json_decode(JTGH_read_option('couleurs_des_categories'));
 
+        // Tri du tableau des couleurs de catégories, par index
+        function JTGH_WPHGP_tri_tableau_couleurs_selon_index($lg_tbl_A, $lg_tbl_B) {
+            if ($lg_tbl_A->index < $lg_tbl_B->index) {
+                return -1;
+            }
+            if ($lg_tbl_A->index == $lg_tbl_B->index) {
+                return 0;
+            }
+            if ($lg_tbl_A->index > $lg_tbl_B->index) {
+                return 1;
+            }
+        }
+        usort($tblCouleursDesCategories, "JTGH_WPHGP_tri_tableau_couleurs_selon_index");
+
+
         // Génération des catégories en entête
         $code_html_a_retourner .= '<div class="JTGH_WPHGP_entete_categories">';
         $code_html_a_retourner .= '<ul class="JTGH_WPHGP_cat_container">';
-            foreach($tblCouleursDesCategories as $infos_categorie) {
-                if($infos_categorie->affichage) {
-                    $couleur_bordure = JTGH_WPHGP_modifier_luminosite($infos_categorie->couleur, -20);
-                    $couleur_fond = JTGH_WPHGP_modifier_luminosite($infos_categorie->couleur, 0);
-                    $code_html_a_retourner .= '<li style="background: #'.$couleur_fond.'; border-color: #'.$couleur_bordure.';">'.$infos_categorie->name.'</li>';
-                }
+        foreach($tblCouleursDesCategories as $infos_categorie) {
+            if($infos_categorie->affichage) {
+                $couleur_bordure = JTGH_WPHGP_modifier_luminosite($infos_categorie->couleur, -20);
+                $couleur_fond = JTGH_WPHGP_modifier_luminosite($infos_categorie->couleur, 0);
+                $code_html_a_retourner .= '<li style="background: #'.$couleur_fond.'; border-color: #'.$couleur_bordure.';">'.$infos_categorie->name.'</li>';
             }
-
-
-
-
-
-
-
+        }
         $code_html_a_retourner .= '</ul>';
         $code_html_a_retourner .= '</div>';
 
+
+
+
+
+
+
+
  
-        print_r($tblCouleursDesCategories);
-        echo '<br><br>';
+        // print_r($tblCouleursDesCategories);
+        // echo '<br><br>';
         
         // À développer par la suite
         return $code_html_a_retourner;

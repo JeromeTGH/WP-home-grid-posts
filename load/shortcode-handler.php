@@ -48,18 +48,47 @@
 
 
 
-
-
-
         
 
+        // Requête pour lister les catégories
+        $rqt_recup_articles_par_categorie = "SELECT P.ID, P.post_title, PM.meta_value
+        FROM `wp_posts` AS P
+        LEFT JOIN `wp_term_relationships` AS RS ON RS.object_id = P.ID
+        LEFT JOIN `wp_term_taxonomy` AS TT ON TT.term_taxonomy_id = RS.term_taxonomy_id
+        LEFT JOIN `wp_terms` AS T ON T.term_id = TT.term_id
+        LEFT JOIN `wp_postmeta` AS PM ON PM.post_id = P.ID
+        WHERE P.post_type = 'post'
+        AND P.post_status = 'publish'
+        AND T.term_id = 5
+        AND PM.meta_key = '_thumbnail_id'
+        ORDER BY P.post_date_gmt DESC";
+        $resultat_recup_articles_par_categorie = $wpdb->get_results($rqt_recup_articles_par_categorie);
+
+        $rqt_recupere_lien_image_article = "SELECT P.guid, P.post_content
+        FROM `wp_posts` AS P
+        WHERE P.ID = ".$resultat_recup_articles_par_categorie[0]->meta_value;
+        $resultat_recupere_lien_image_article = $wpdb->get_results($rqt_recupere_lien_image_article);
+
+
+        // print_r($resultat_recup_articles_par_categorie);
+        // echo '<br><br>';
+        // print_r($resultat_recupere_lien_image_article);
+        // echo '<br><br>';
 
 
 
 
 
         // Génération des tabs
-        $code_html_a_retourner .= '<div>';
+        $code_html_a_retourner .= '<div class="JTGH_WPHGP_all_posts_container">';
+        $code_html_a_retourner .= '<div class="JTGH_WPHGP_category_posts_container">';
+        $code_html_a_retourner .= '<div class="JTGH_WPHGP_category_post_container">';
+        $code_html_a_retourner .= '<img src="'.$resultat_recupere_lien_image_article[0]->guid.'" alt="'.$resultat_recupere_lien_image_article[0]->post_content.'" />';
+        $code_html_a_retourner .= '<div>Titre</div>';
+        $code_html_a_retourner .= '<div>Texte</div>';
+        $code_html_a_retourner .= '<div>Lire plus...</div>';
+        $code_html_a_retourner .= '</div>';
+        $code_html_a_retourner .= '</div>';
         $code_html_a_retourner .= '</div>';
 
 
@@ -67,12 +96,6 @@
 
 
 
-
-
- 
-        // print_r($tblCouleursDesCategories);
-        // echo '<br><br>';
-        
         // Retour HTML du shortcode
         return $code_html_a_retourner;
 

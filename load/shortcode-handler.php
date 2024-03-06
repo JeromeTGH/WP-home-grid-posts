@@ -18,9 +18,10 @@
         // Récupération du lien vers la BDD, pour pouvoir faire des requêtes ensuite
         global $wpdb;
 
-        // Chargement de la liste des catégories choisies, et des couleurs associées
+        // Chargement des options qui nous intéresse
         $tblCategoriesChoisies = json_decode(JTGH_read_option('categories_a_afficher'));
         $tblCouleursDesCategories = json_decode(JTGH_read_option('couleurs_des_categories'));
+        $bAfficherMetadonnees = json_decode(JTGH_read_option('afficher_metadonnees'));
 
         // Tri du tableau des couleurs de catégories, par index
         function JTGH_WPHGP_tri_tableau_couleurs_selon_index($lg_tbl_A, $lg_tbl_B) {
@@ -56,11 +57,11 @@
         $code_html_a_retourner .= '<div class="JTGH_WPHGP_all_posts_container">';
 
             // Catégorie "0" (tout, en fait)
-            $code_html_a_retourner .= JTGH_WPHGP_get_category_bloc_content(0, $nombre_d_articles_a_afficher);
+            $code_html_a_retourner .= JTGH_WPHGP_get_category_bloc_content(0, $nombre_d_articles_a_afficher, $bAfficherMetadonnees);
 
             // Autres catégories (scan $tblCategoriesChoisies)
             foreach($tblCategoriesChoisies as $categoriesChoisie) {
-                $code_html_a_retourner .= JTGH_WPHGP_get_category_bloc_content($categoriesChoisie, $nombre_d_articles_a_afficher);
+                $code_html_a_retourner .= JTGH_WPHGP_get_category_bloc_content($categoriesChoisie, $nombre_d_articles_a_afficher, $bAfficherMetadonnees);
             }
 
         $code_html_a_retourner .= '</div>';
@@ -72,7 +73,7 @@
 
 
     // Fonction permettant la génération du bloc de contenu, pour une catégorie donnée (ou pas de catégorie, si cat_id=0)
-    function JTGH_WPHGP_get_category_bloc_content($cat_id, $nombre_d_articles_a_afficher) {
+    function JTGH_WPHGP_get_category_bloc_content($cat_id, $nombre_d_articles_a_afficher, $bAfficherMetadonnees) {
 
         global $wpdb;
 
@@ -81,28 +82,32 @@
 
         // Requête pour lister tous les articles d'une catégorie donnée (ou de tout l'ensemble, le cas échéant)
         if($cat_id == 0) {
-            $rqt_recup_articles_par_categorie = "SELECT P.ID, P.post_title, P.post_content, PM.meta_value
+            $rqt_recup_articles_par_categorie = "SELECT P.ID, P.post_title, P.post_content, P.post_date_gmt, PM.meta_value AS PM_meta_value, UM.meta_value AS UM_meta_value
             FROM `wp_posts` AS P
             LEFT JOIN `wp_term_relationships` AS RS ON RS.object_id = P.ID
             LEFT JOIN `wp_term_taxonomy` AS TT ON TT.term_taxonomy_id = RS.term_taxonomy_id
             LEFT JOIN `wp_terms` AS T ON T.term_id = TT.term_id
             LEFT JOIN `wp_postmeta` AS PM ON PM.post_id = P.ID
+            LEFT JOIN `wp_usermeta` AS UM ON UM.user_id = P.post_author
             WHERE P.post_type = 'post'
             AND P.post_status = 'publish'
             AND PM.meta_key = '_thumbnail_id'
+            AND UM.meta_key = 'nickname'
             ORDER BY P.post_date_gmt DESC
             LIMIT $nombre_d_articles_a_afficher";
         } else {
-            $rqt_recup_articles_par_categorie = "SELECT P.ID, P.post_title, P.post_content, PM.meta_value
+            $rqt_recup_articles_par_categorie = "SELECT P.ID, P.post_title, P.post_content, P.post_date_gmt, PM.meta_value AS PM_meta_value, UM.meta_value AS UM_meta_value
             FROM `wp_posts` AS P
             LEFT JOIN `wp_term_relationships` AS RS ON RS.object_id = P.ID
             LEFT JOIN `wp_term_taxonomy` AS TT ON TT.term_taxonomy_id = RS.term_taxonomy_id
             LEFT JOIN `wp_terms` AS T ON T.term_id = TT.term_id
             LEFT JOIN `wp_postmeta` AS PM ON PM.post_id = P.ID
+            LEFT JOIN `wp_usermeta` AS UM ON UM.user_id = P.post_author
             WHERE P.post_type = 'post'
             AND P.post_status = 'publish'
             AND T.term_id = $cat_id
             AND PM.meta_key = '_thumbnail_id'
+            AND UM.meta_key = 'nickname'
             ORDER BY P.post_date_gmt DESC
             LIMIT $nombre_d_articles_a_afficher";
         }
@@ -118,14 +123,26 @@
                 // Requête pour récupérer l'url de l'image de l'article correspondant
                 $rqt_recupere_lien_image_article = "SELECT P.guid, P.post_content
                 FROM `wp_posts` AS P
-                WHERE P.ID = ".$resultat_recup_articles_par_categorie[$i]->meta_value;
+                WHERE P.ID = ".$resultat_recup_articles_par_categorie[$i]->PM_meta_value;
                 $resultat_recupere_lien_image_article = $wpdb->get_results($rqt_recupere_lien_image_article);
 
                 // Génère les données
                 $resultat_recupere_lien_image_article = $wpdb->get_results($rqt_recupere_lien_image_article);
                 $code_html_a_retourner .= '<div class="JTGH_WPHGP_category_post_container">';
-                    $code_html_a_retourner .= '<img src="'.$resultat_recupere_lien_image_article[0]->guid.'" alt="'.$resultat_recupere_lien_image_article[0]->post_content.'" />';
+                    if(count($resultat_recupere_lien_image_article) == 0) {
+                        $code_html_a_retourner .= '<img src="" alt="Aucune image" />';
+                    } else {
+                        $code_html_a_retourner .= '<img src="'.$resultat_recupere_lien_image_article[0]->guid.'" alt="'.$resultat_recupere_lien_image_article[0]->post_content.'" />';
+                    }
                     $code_html_a_retourner .= '<div class="JTGH_WPHGP_category_post_title">'.$resultat_recup_articles_par_categorie[$i]->post_title.'</div>';
+                    if($bAfficherMetadonnees) {
+                        $datetime_de_creation = strtotime($resultat_recup_articles_par_categorie[$i]->post_date_gmt);
+                        $date_de_creation = date('d/m/Y', $datetime_de_creation);
+                        $code_html_a_retourner .= '<div class="JTGH_WPHGP_category_post_meta">';
+                        $code_html_a_retourner .= '<span class="dashicons dashicons-admin-users"></span><span>'.$resultat_recup_articles_par_categorie[$i]->UM_meta_value.'</span>&nbsp;';
+                        $code_html_a_retourner .= '<span class="dashicons dashicons-calendar-alt"></span><span>'.$date_de_creation.'</span>';
+                        $code_html_a_retourner .= '</div>';
+                    }
                     $code_html_a_retourner .= '<div class="JTGH_WPHGP_category_post_extract">'.JTGH_WPHGP_post_extract($resultat_recup_articles_par_categorie[$i]->post_content, 35).'</div>';
                     $code_html_a_retourner .= '<div class="JTGH_WPHGP_category_post_link"><a href="'.get_permalink($resultat_recup_articles_par_categorie[$i]->ID).'?pseSrc=home">Lire plus...</a></div>';
                 $code_html_a_retourner .= '</div>';

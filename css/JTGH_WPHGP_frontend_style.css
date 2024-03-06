@@ -98,3 +98,6 @@
         font-size: 1.2rem;
     }
 }
+.JTGH_WPHGP_grid_next_row {
+    grid-column-start: 1;
+}

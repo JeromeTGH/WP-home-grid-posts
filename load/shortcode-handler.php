@@ -152,6 +152,11 @@
                     $code_html_a_retourner .= '<div class="JTGH_WPHGP_category_post_link"><a href="'.get_permalink($resultat_recup_articles_par_categorie[$i]->ID).'?pseSrc=home">Lire plus...</a></div>';
                 $code_html_a_retourner .= '</div>';
             }
+            if($cat_id == 0) {
+                $code_html_a_retourner .= '<div class="JTGH_WPHGP_grid_next_row">→&nbsp;<a href="/articles/">Voir tous les articles</a></div>';
+            } else {
+                $code_html_a_retourner .= '<div class="JTGH_WPHGP_grid_next_row">→&nbsp;<a href="'.get_term_link($cat_id).'">Voir tous les articles de cette catégorie</a></div>';
+            }
         $code_html_a_retourner .= '</div>';
 
         // Retourne les données

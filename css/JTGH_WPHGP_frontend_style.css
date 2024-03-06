@@ -45,12 +45,14 @@
     overflow: hidden;
     height: 100%;
 }
-.JTGH_WPHGP_category_post_container img {
+.JTGH_WPHGP_category_post_img {
+    background: #EAE6E0;
+}
+.JTGH_WPHGP_category_post_img img {
     object-fit: contain;
-    background: #555555;
 }
 .JTGH_WPHGP_category_post_title {
-    padding: 0.4rem 0.8rem;
+    padding: 0rem 0.8rem 0.4rem 0.8rem;
     font-size: 1.4rem;
     font-weight: 800;
     line-height: 1.1;
@@ -63,7 +65,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-bottom: 0.4rem;
+    padding-bottom: 0.6rem;
 }
 .JTGH_WPHGP_category_post_meta svg {
     margin-right: 0.2rem;

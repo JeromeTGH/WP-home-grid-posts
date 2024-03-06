@@ -124,12 +124,13 @@
                 $resultat_recupere_lien_image_article = $wpdb->get_results($rqt_recupere_lien_image_article);
 
                 // Génère les données
+                $lien_article = get_permalink($resultat_recup_articles_par_categorie[$i]->ID);
                 $resultat_recupere_lien_image_article = $wpdb->get_results($rqt_recupere_lien_image_article);
                 $code_html_a_retourner .= '<div class="JTGH_WPHGP_category_post_container">';
                     if(count($resultat_recupere_lien_image_article) == 0) {
-                        $code_html_a_retourner .= '<img src="" alt="Aucune image" />';
+                        $code_html_a_retourner .= '<div class="JTGH_WPHGP_category_post_img"><a href="'.$lien_article.'?pseSrc=homeImg"><img src="" alt="Aucune image" /></a></div>';
                     } else {
-                        $code_html_a_retourner .= '<img src="'.$resultat_recupere_lien_image_article[0]->guid.'" alt="'.$resultat_recupere_lien_image_article[0]->post_content.'" />';
+                        $code_html_a_retourner .= '<div class="JTGH_WPHGP_category_post_img"><a href="'.$lien_article.'?pseSrc=homeImg"><img src="'.$resultat_recupere_lien_image_article[0]->guid.'" alt="'.$resultat_recupere_lien_image_article[0]->post_content.'" /></a></div>';
                     }
                     $code_html_a_retourner .= '<div class="JTGH_WPHGP_category_post_title">'.$resultat_recup_articles_par_categorie[$i]->post_title.'</div>';
                     if($bAfficherMetadonnees) {
@@ -146,7 +147,7 @@
                         $code_html_a_retourner .= '</div>';
                     }
                     $code_html_a_retourner .= '<div class="JTGH_WPHGP_category_post_extract">'.JTGH_WPHGP_post_extract($resultat_recup_articles_par_categorie[$i]->post_content, $nombre_de_mots_a_afficher_au_maximum).'</div>';
-                    $code_html_a_retourner .= '<div class="JTGH_WPHGP_category_post_link"><a href="'.get_permalink($resultat_recup_articles_par_categorie[$i]->ID).'?pseSrc=home">Lire la suite »</a></div>';
+                    $code_html_a_retourner .= '<div class="JTGH_WPHGP_category_post_link"><a href="'.$lien_article.'?pseSrc=homeLnk">Lire la suite »</a></div>';
                 $code_html_a_retourner .= '</div>';
             }
             if($cat_id == 0) {

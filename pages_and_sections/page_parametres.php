@@ -17,10 +17,9 @@
     $modifs_annulees = false;
 
     // Paramètres à afficher
-    $nbre_d_articles_par_page = 0;
-    $nbre_de_colonnes_d_affichage = 0;
+    $nbre_d_articles_par_categorie = 0;
     $afficher_metadonnees = false;
-    $longueur_maxi_extract = 0;
+    $nb_mots_maxi_extract = 0;
 
     // Traitement des données postées, le cas échéant
     if(isset($_POST) && isset($_POST['btnCancelParamsModifications'])) {
@@ -46,12 +45,8 @@
         }
 
         // Vérification de la présence des données attendues (input text, hors checkbox)
-        if(!isset($_POST['JTGH_WPHGP_param_nb_articles_par_page'])) {
-            ?><div class="JTGH_WPHGP_notice_alert">Valeur "JTGH_WPHGP_param_nb_articles_par_page" manquante...</div><?php
-            $echec_de_maj = true;
-        }
-        if(!isset($_POST['JTGH_WPHGP_param_nb_colonnes_a_afficher'])) {
-            ?><div class="JTGH_WPHGP_notice_alert">Valeur "JTGH_WPHGP_param_nb_colonnes_a_afficher" manquante...</div><?php
+        if(!isset($_POST['JTGH_WPHGP_param_nb_articles_par_categorie'])) {
+            ?><div class="JTGH_WPHGP_notice_alert">Valeur "JTGH_WPHGP_param_nb_articles_par_categorie" manquante...</div><?php
             $echec_de_maj = true;
         }
         if(!isset($_POST['JTGH_WPHGP_param_nb_cars_max_extract'])) {
@@ -60,12 +55,8 @@
         }
 
         // Vérification du format des données
-        if (!is_numeric($_POST['JTGH_WPHGP_param_nb_articles_par_page'])) {
-            ?><div class="JTGH_WPHGP_notice_alert">Valeur "JTGH_WPHGP_param_nb_articles_par_page" non numérique...</div><?php
-            $echec_de_maj = true;
-        }
-        if (!is_numeric($_POST['JTGH_WPHGP_param_nb_colonnes_a_afficher'])) {
-            ?><div class="JTGH_WPHGP_notice_alert">Valeur "JTGH_WPHGP_param_nb_colonnes_a_afficher" non numérique...</div><?php
+        if (!is_numeric($_POST['JTGH_WPHGP_param_nb_articles_par_categorie'])) {
+            ?><div class="JTGH_WPHGP_notice_alert">Valeur "JTGH_WPHGP_param_nb_articles_par_categorie" non numérique...</div><?php
             $echec_de_maj = true;
         }
         if (!is_numeric($_POST['JTGH_WPHGP_param_nb_cars_max_extract'])) {
@@ -79,15 +70,13 @@
         } else {
             $afficher_metadonnees = false;
         }
-        $nbre_d_articles_par_page = $_POST['JTGH_WPHGP_param_nb_articles_par_page'];
-        $nbre_de_colonnes_d_affichage = $_POST['JTGH_WPHGP_param_nb_colonnes_a_afficher'];
-        $longueur_maxi_extract = $_POST['JTGH_WPHGP_param_nb_cars_max_extract'];
+        $nbre_d_articles_par_categorie = $_POST['JTGH_WPHGP_param_nb_articles_par_categorie'];
+        $nb_mots_maxi_extract = $_POST['JTGH_WPHGP_param_nb_cars_max_extract'];
 
         // Enregistrement des nouvelles données
-        JTGH_write_option('nbre_d_articles_par_page', $nbre_d_articles_par_page);
-        JTGH_write_option('nbre_de_colonnes_d_affichage', $nbre_de_colonnes_d_affichage);
+        JTGH_write_option('nbre_d_articles_par_categorie', $nbre_d_articles_par_categorie);
         JTGH_write_option('afficher_metadonnees', $afficher_metadonnees);
-        JTGH_write_option('longueur_maxi_extract', $longueur_maxi_extract);
+        JTGH_write_option('nb_mots_maxi_extract', $nb_mots_maxi_extract);
         $maj_effectuee = true;
 
     }
@@ -95,10 +84,9 @@
 ?>
 <?php
     // Chargement des options
-    $nbre_d_articles_par_page = JTGH_read_option('nbre_d_articles_par_page');
-    $nbre_de_colonnes_d_affichage = JTGH_read_option('nbre_de_colonnes_d_affichage');
+    $nbre_d_articles_par_categorie = JTGH_read_option('nbre_d_articles_par_categorie');
     $afficher_metadonnees = JTGH_read_option('afficher_metadonnees');
-    $longueur_maxi_extract = JTGH_read_option('longueur_maxi_extract');
+    $nb_mots_maxi_extract = JTGH_read_option('nb_mots_maxi_extract');
 ?>
 <?php
     if($modifs_annulees) {?>
@@ -123,21 +111,12 @@
         <table class="JTGH_WPHGP_params_table">
             <tbody>
                 <tr>
-                    <td>Nombre d'articles par page = </td>
+                    <td>Nombre d'articles par catégorie = </td>
                     <td><input
                         type="number"
-                        id="JTGH_WPHGP_param_nb_articles_par_page"
-                        name="JTGH_WPHGP_param_nb_articles_par_page"
-                        value="<?php echo $nbre_d_articles_par_page; ?>"
-                    /></td>
-                </tr>
-                <tr>
-                    <td>Nombre de colonnes à afficher = </td>
-                    <td><input
-                        type="number"
-                        id="JTGH_WPHGP_param_nb_colonnes_a_afficher"
-                        name="JTGH_WPHGP_param_nb_colonnes_a_afficher"
-                        value="<?php echo $nbre_de_colonnes_d_affichage; ?>"
+                        id="JTGH_WPHGP_param_nb_articles_par_categorie"
+                        name="JTGH_WPHGP_param_nb_articles_par_categorie"
+                        value="<?php echo $nbre_d_articles_par_categorie; ?>"
                     /></td>
                 </tr>
                 <tr>
@@ -150,12 +129,12 @@
                     /></td>
                 </tr>
                 <tr>
-                    <td>Nombre de caractères maxi à afficher (extract) = </td>
+                    <td>Nombre de mots maxi à afficher (extrait d'article) = </td>
                     <td><input
                         type="number"
                         id="JTGH_WPHGP_param_nb_cars_max_extract"
                         name="JTGH_WPHGP_param_nb_cars_max_extract"
-                        value="<?php echo $longueur_maxi_extract; ?>"
+                        value="<?php echo $nb_mots_maxi_extract; ?>"
                     /></td>
                 </tr>
             </tbody>

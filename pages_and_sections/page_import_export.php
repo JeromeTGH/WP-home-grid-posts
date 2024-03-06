@@ -24,10 +24,9 @@
         $shortcode_name = JTGH_read_option('shortcode_name');
         $categories_a_afficher = JTGH_read_option('categories_a_afficher');
         $couleurs_des_categories = JTGH_read_option('couleurs_des_categories');
-        $nbre_d_articles_par_page = JTGH_read_option('nbre_d_articles_par_page');
-        $nbre_de_colonnes_d_affichage = JTGH_read_option('nbre_de_colonnes_d_affichage');
+        $nbre_d_articles_par_categorie = JTGH_read_option('nbre_d_articles_par_categorie');
         $afficher_metadonnees = JTGH_read_option('afficher_metadonnees');
-        $longueur_maxi_extract = JTGH_read_option('longueur_maxi_extract');
+        $nb_mots_maxi_extract = JTGH_read_option('nb_mots_maxi_extract');
 
         // Construction du tableau associatif, qui sera ensuite transformé en objet json
         $donnees_a_enregistrer = [
@@ -35,10 +34,9 @@
             'shortcode_name' => $shortcode_name,
             'categories_a_afficher' => $categories_a_afficher,
             'couleurs_des_categories' => $couleurs_des_categories,
-            'nbre_d_articles_par_page' => $nbre_d_articles_par_page,
-            'nbre_de_colonnes_d_affichage' => $nbre_de_colonnes_d_affichage,
+            'nbre_d_articles_par_categorie' => $nbre_d_articles_par_categorie,
             'afficher_metadonnees' => $afficher_metadonnees,
-            'longueur_maxi_extract' => $longueur_maxi_extract
+            'nb_mots_maxi_extract' => $nb_mots_maxi_extract
         ];
 
         // Envoi de l'entête et des données au format JSON
@@ -128,20 +126,16 @@
                 ?><div class="JTGH_WPHGP_notice_alert">Champ "couleurs_des_categories" manquant dans les données à importer</div><?php
                 $echec_de_l_import = true;
             }
-            if (!array_key_exists('nbre_d_articles_par_page', $tableau_de_donnees_a_importer)) {
-                ?><div class="JTGH_WPHGP_notice_alert">Champ "nbre_d_articles_par_page" manquant dans les données à importer</div><?php
-                $echec_de_l_import = true;
-            }
-            if (!array_key_exists('nbre_de_colonnes_d_affichage', $tableau_de_donnees_a_importer)) {
-                ?><div class="JTGH_WPHGP_notice_alert">Champ "nbre_de_colonnes_d_affichage" manquant dans les données à importer</div><?php
+            if (!array_key_exists('nbre_d_articles_par_categorie', $tableau_de_donnees_a_importer)) {
+                ?><div class="JTGH_WPHGP_notice_alert">Champ "nbre_d_articles_par_categorie" manquant dans les données à importer</div><?php
                 $echec_de_l_import = true;
             }
             if (!array_key_exists('afficher_metadonnees', $tableau_de_donnees_a_importer)) {
                 ?><div class="JTGH_WPHGP_notice_alert">Champ "afficher_metadonnees" manquant dans les données à importer</div><?php
                 $echec_de_l_import = true;
             }
-            if (!array_key_exists('longueur_maxi_extract', $tableau_de_donnees_a_importer)) {
-                ?><div class="JTGH_WPHGP_notice_alert">Champ "longueur_maxi_extract" manquant dans les données à importer</div><?php
+            if (!array_key_exists('nb_mots_maxi_extract', $tableau_de_donnees_a_importer)) {
+                ?><div class="JTGH_WPHGP_notice_alert">Champ "nb_mots_maxi_extract" manquant dans les données à importer</div><?php
                 $echec_de_l_import = true;
             }
 
@@ -154,30 +148,27 @@
             $shortcode_name = $tableau_de_donnees_a_importer['shortcode_name'];
             $categories_a_afficher = $tableau_de_donnees_a_importer['categories_a_afficher'];
             $couleurs_des_categories = $tableau_de_donnees_a_importer['couleurs_des_categories'];
-            $nbre_d_articles_par_page = $tableau_de_donnees_a_importer['nbre_d_articles_par_page'];
-            $nbre_de_colonnes_d_affichage = $tableau_de_donnees_a_importer['nbre_de_colonnes_d_affichage'];
+            $nbre_d_articles_par_categorie = $tableau_de_donnees_a_importer['nbre_d_articles_par_categorie'];
             $afficher_metadonnees = $tableau_de_donnees_a_importer['afficher_metadonnees'];
-            $longueur_maxi_extract = $tableau_de_donnees_a_importer['longueur_maxi_extract'];
+            $nb_mots_maxi_extract = $tableau_de_donnees_a_importer['nb_mots_maxi_extract'];
 
             // Suppression des données présentes en base
             JTGH_delete_option('activation_date');
             JTGH_delete_option('shortcode_name');
             JTGH_delete_option('categories_a_afficher');
             JTGH_delete_option('couleurs_des_categories');
-            JTGH_delete_option('nbre_d_articles_par_page');
-            JTGH_delete_option('nbre_de_colonnes_d_affichage');
+            JTGH_delete_option('nbre_d_articles_par_categorie');
             JTGH_delete_option('afficher_metadonnees');
-            JTGH_delete_option('longueur_maxi_extract');
+            JTGH_delete_option('nb_mots_maxi_extract');
 
             // Enregistrement des nouvelles données
             JTGH_create_option('activation_date', $activation_date);
             JTGH_create_option('shortcode_name', $shortcode_name);
             JTGH_create_option('categories_a_afficher', $categories_a_afficher);
             JTGH_create_option('couleurs_des_categories', $couleurs_des_categories);
-            JTGH_create_option('nbre_d_articles_par_page', $nbre_d_articles_par_page);
-            JTGH_create_option('nbre_de_colonnes_d_affichage', $nbre_de_colonnes_d_affichage);
+            JTGH_create_option('nbre_d_articles_par_categorie', $nbre_d_articles_par_categorie);
             JTGH_create_option('afficher_metadonnees', $afficher_metadonnees);
-            JTGH_create_option('longueur_maxi_extract', $longueur_maxi_extract);
+            JTGH_create_option('nb_mots_maxi_extract', $nb_mots_maxi_extract);
 
         }
 

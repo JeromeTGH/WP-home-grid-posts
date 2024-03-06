@@ -22,6 +22,8 @@
         $tblCategoriesChoisies = json_decode(JTGH_read_option('categories_a_afficher'));
         $tblCouleursDesCategories = json_decode(JTGH_read_option('couleurs_des_categories'));
         $bAfficherMetadonnees = json_decode(JTGH_read_option('afficher_metadonnees'));
+        $nombre_d_articles_a_afficher = JTGH_read_option('nbre_d_articles_par_categorie');
+        $nombre_de_mots_a_afficher_au_maximum = JTGH_read_option('nb_mots_maxi_extract');
 
         // Tri du tableau des couleurs de catégories, par index
         function JTGH_WPHGP_tri_tableau_couleurs_selon_index($lg_tbl_A, $lg_tbl_B) {
@@ -46,22 +48,17 @@
             }
         }
         $code_html_a_retourner .= '</ul>';
-
-
-        // Récupération de certains paramètres du plugin
-        $nombre_de_mots_a_afficher_au_maximum = 35;
-        $nombre_d_articles_a_afficher = 12;
         
 
         // Génération des tabs
         $code_html_a_retourner .= '<div class="JTGH_WPHGP_all_posts_container">';
 
             // Catégorie "0" (tout, en fait)
-            $code_html_a_retourner .= JTGH_WPHGP_get_category_bloc_content(0, $nombre_d_articles_a_afficher, $bAfficherMetadonnees);
+            $code_html_a_retourner .= JTGH_WPHGP_get_category_bloc_content(0, $nombre_d_articles_a_afficher, $bAfficherMetadonnees, $nombre_de_mots_a_afficher_au_maximum);
 
             // Autres catégories (scan $tblCategoriesChoisies)
             foreach($tblCategoriesChoisies as $categoriesChoisie) {
-                $code_html_a_retourner .= JTGH_WPHGP_get_category_bloc_content($categoriesChoisie, $nombre_d_articles_a_afficher, $bAfficherMetadonnees);
+                $code_html_a_retourner .= JTGH_WPHGP_get_category_bloc_content($categoriesChoisie, $nombre_d_articles_a_afficher, $bAfficherMetadonnees, $nombre_de_mots_a_afficher_au_maximum);
             }
 
         $code_html_a_retourner .= '</div>';
@@ -73,7 +70,7 @@
 
 
     // Fonction permettant la génération du bloc de contenu, pour une catégorie donnée (ou pas de catégorie, si cat_id=0)
-    function JTGH_WPHGP_get_category_bloc_content($cat_id, $nombre_d_articles_a_afficher, $bAfficherMetadonnees) {
+    function JTGH_WPHGP_get_category_bloc_content($cat_id, $nombre_d_articles_a_afficher, $bAfficherMetadonnees, $nombre_de_mots_a_afficher_au_maximum) {
 
         global $wpdb;
 
@@ -148,8 +145,8 @@
                         $code_html_a_retourner .= '<span>'.$resultat_recup_articles_par_categorie[$i]->UM_meta_value.'</span>';
                         $code_html_a_retourner .= '</div>';
                     }
-                    $code_html_a_retourner .= '<div class="JTGH_WPHGP_category_post_extract">'.JTGH_WPHGP_post_extract($resultat_recup_articles_par_categorie[$i]->post_content, 35).'</div>';
-                    $code_html_a_retourner .= '<div class="JTGH_WPHGP_category_post_link"><a href="'.get_permalink($resultat_recup_articles_par_categorie[$i]->ID).'?pseSrc=home">Lire plus...</a></div>';
+                    $code_html_a_retourner .= '<div class="JTGH_WPHGP_category_post_extract">'.JTGH_WPHGP_post_extract($resultat_recup_articles_par_categorie[$i]->post_content, $nombre_de_mots_a_afficher_au_maximum).'</div>';
+                    $code_html_a_retourner .= '<div class="JTGH_WPHGP_category_post_link"><a href="'.get_permalink($resultat_recup_articles_par_categorie[$i]->ID).'?pseSrc=home">Lire la suite »</a></div>';
                 $code_html_a_retourner .= '</div>';
             }
             if($cat_id == 0) {

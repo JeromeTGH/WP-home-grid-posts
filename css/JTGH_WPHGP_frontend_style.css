@@ -35,6 +35,7 @@
     grid-template-columns: 1fr 1fr 1fr;
     row-gap: 2rem;
     column-gap: 2rem;
+    margin-bottom: 2rem!important;
 }
 .JTGH_WPHGP_category_post_container {
     display: flex;
@@ -55,6 +56,18 @@
     line-height: 1.1;
     text-align: center;
     background: #EAE6E0;
+}
+.JTGH_WPHGP_category_post_meta {
+    font-size: 0.7rem;
+    background: #EAE6E0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 0.4rem;
+}
+.JTGH_WPHGP_category_post_meta svg {
+    margin-right: 0.2rem;
+    margin-bottom: 0.1rem;
 }
 .JTGH_WPHGP_category_post_extract {
     padding: 0.4rem 0.8rem;

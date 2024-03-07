@@ -82,8 +82,8 @@
 
     // Requête pour lister les catégories
     $rqt_listing_categories = "SELECT T.term_id, T.name
-    FROM `wp_terms` AS T
-    LEFT JOIN `wp_term_taxonomy` AS X ON T.term_id = X.term_id
+    FROM `".$wpdb->prefix."terms` AS T
+    LEFT JOIN `".$wpdb->prefix."term_taxonomy` AS X ON T.term_id = X.term_id
     WHERE X.taxonomy = 'category'
     ORDER BY T.name ASC";
     $resultat_listing_categories = $wpdb->get_results($rqt_listing_categories);

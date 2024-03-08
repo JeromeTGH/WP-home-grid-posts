@@ -6,6 +6,7 @@
     margin: 0!important;
     padding: 0!important;
     margin-bottom: 2rem!important;
+    background: transparent!important;
 }
 .JTGH_WPHGP_cat_container li {
     list-style-type: none!important;
@@ -52,8 +53,8 @@
     object-fit: contain;
 }
 .JTGH_WPHGP_category_post_title {
-    padding: 0rem 0.8rem 0.4rem 0.8rem;
-    font-size: 1.4rem;
+    padding: 0.4rem 0.8rem 0.8rem 0.8rem;
+    font-size: 1.1rem;
     font-weight: 800;
     line-height: 1.1;
     text-align: center;

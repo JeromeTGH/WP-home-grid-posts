@@ -81,9 +81,6 @@
         if($cat_id == 0) {
             $rqt_recup_articles_par_categorie = "SELECT P.ID, P.post_title, P.post_content, P.post_date_gmt, PM.meta_value AS PM_meta_value, UM.meta_value AS UM_meta_value
             FROM `".$wpdb->prefix."posts` AS P
-            LEFT JOIN `".$wpdb->prefix."term_relationships` AS RS ON RS.object_id = P.ID
-            LEFT JOIN `".$wpdb->prefix."term_taxonomy` AS TT ON TT.term_taxonomy_id = RS.term_taxonomy_id
-            LEFT JOIN `".$wpdb->prefix."terms` AS T ON T.term_id = TT.term_id
             LEFT JOIN `".$wpdb->prefix."postmeta` AS PM ON PM.post_id = P.ID
             LEFT JOIN `".$wpdb->prefix."usermeta` AS UM ON UM.user_id = P.post_author
             WHERE P.post_type = 'post'

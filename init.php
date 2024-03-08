@@ -19,7 +19,7 @@
 	require(JTGH_WPHGP_ROOT_DIRECTORY.'/load/uninstall.php');
 	require(JTGH_WPHGP_ROOT_DIRECTORY.'/load/pages_manager.php');
 	require(JTGH_WPHGP_ROOT_DIRECTORY.'/load/menu_admin.php');
-	require(JTGH_WPHGP_ROOT_DIRECTORY.'/load/shortcode-handler.php');
 	require(JTGH_WPHGP_ROOT_DIRECTORY.'/load/add-css-and-js.php');
+	require(JTGH_WPHGP_ROOT_DIRECTORY.'/shortcode-handler/shortcode-handler.php');
 
 ?>

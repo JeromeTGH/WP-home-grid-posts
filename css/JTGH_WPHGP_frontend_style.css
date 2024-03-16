@@ -68,9 +68,11 @@
     align-items: center;
     padding-bottom: 0.6rem;
 }
-.JTGH_WPHGP_category_post_meta svg {
+.JTGH_WPHGP_category_post_meta img {
     margin-right: 0.2rem;
-    margin-bottom: 0.1rem;
+    margin-bottom: 0.2rem;
+    width: 0.8rem;
+    height: 0.8rem;
 }
 .JTGH_WPHGP_category_post_extract {
     padding: 0.4rem 0.8rem;

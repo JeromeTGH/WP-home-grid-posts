@@ -18,6 +18,6 @@
 	define('JTGH_WPHGP_ROOT_DIRECTORY', dirname(__FILE__));
 
 	// Script d'initialisation plugin
-	require(JTGH_WPHGP_ROOT_DIRECTORY.'/init.php');
+	require_once(JTGH_WPHGP_ROOT_DIRECTORY.'/init.php');
 
 ?>

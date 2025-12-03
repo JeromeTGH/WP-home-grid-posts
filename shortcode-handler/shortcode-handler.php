@@ -8,6 +8,18 @@
     add_shortcode(JTGH_WPHGP_SHORTCODE_NAME, 'JTGH_WPHGP_display_content');     // Pour activer les shortcodes du plugin
     add_filter('widget_text', 'do_shortcode');                                  // Pour activer les shortcodes dans les widgets de type texte
 
+    // Fonction de tri
+    function JTGH_WPHGP_tri_tableau_couleurs_selon_index($lg_tbl_A, $lg_tbl_B) {
+        if ($lg_tbl_A->index < $lg_tbl_B->index) {
+            return -1;
+        }
+        if ($lg_tbl_A->index == $lg_tbl_B->index) {
+            return 0;
+        }
+        if ($lg_tbl_A->index > $lg_tbl_B->index) {
+            return 1;
+        }
+    }
 
     // Fonction qui retourne le code HTML correspondant au shortcode appelé
     function JTGH_WPHGP_display_content($shortcode_parameters) {
@@ -26,17 +38,6 @@
         $nombre_de_mots_a_afficher_au_maximum = JTGH_read_option('nb_mots_maxi_extract');
 
         // Tri du tableau des couleurs de catégories, par index
-        function JTGH_WPHGP_tri_tableau_couleurs_selon_index($lg_tbl_A, $lg_tbl_B) {
-            if ($lg_tbl_A->index < $lg_tbl_B->index) {
-                return -1;
-            }
-            if ($lg_tbl_A->index == $lg_tbl_B->index) {
-                return 0;
-            }
-            if ($lg_tbl_A->index > $lg_tbl_B->index) {
-                return 1;
-            }
-        }
         usort($tblCouleursDesCategories, "JTGH_WPHGP_tri_tableau_couleurs_selon_index");
 
         // Génération des catégories en entête

@@ -14,12 +14,12 @@
 	ob_start();
 
 	// Scripts à lancer
-	require(JTGH_WPHGP_ROOT_DIRECTORY.'/load/fonctions.php');
-	require(JTGH_WPHGP_ROOT_DIRECTORY.'/load/install.php');
-	require(JTGH_WPHGP_ROOT_DIRECTORY.'/load/uninstall.php');
-	require(JTGH_WPHGP_ROOT_DIRECTORY.'/load/pages_manager.php');
-	require(JTGH_WPHGP_ROOT_DIRECTORY.'/load/menu_admin.php');
-	require(JTGH_WPHGP_ROOT_DIRECTORY.'/load/add-css-and-js.php');
-	require(JTGH_WPHGP_ROOT_DIRECTORY.'/shortcode-handler/shortcode-handler.php');
+	require_once(JTGH_WPHGP_ROOT_DIRECTORY.'/load/fonctions.php');
+	require_once(JTGH_WPHGP_ROOT_DIRECTORY.'/load/install.php');
+	require_once(JTGH_WPHGP_ROOT_DIRECTORY.'/load/uninstall.php');
+	require_once(JTGH_WPHGP_ROOT_DIRECTORY.'/load/pages_manager.php');
+	require_once(JTGH_WPHGP_ROOT_DIRECTORY.'/load/menu_admin.php');
+	require_once(JTGH_WPHGP_ROOT_DIRECTORY.'/load/add-css-and-js.php');
+	require_once(JTGH_WPHGP_ROOT_DIRECTORY.'/shortcode-handler/shortcode-handler.php');
 
 ?>
